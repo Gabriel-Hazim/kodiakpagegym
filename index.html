@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kodiak ForceLab — Tienda Deportiva de Alto Rendimiento, Biomecánica y Equipamiento de Fuerza de Grado Comercial y Competición Internacional.">
+  <meta name="author" content="Gabriel Zaul Hazim Martínez (Kodiak)">
+  <title>KODIAK FORCELAB — Tienda de Alto Rendimiento Deportivo</title>
+
+  <!-- Google Fonts: Inter & Rajdhani -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5.3.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- FontAwesome 6.5.2 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       1. HEADER SEMÁNTICO (<header>)
+       ======================================================================== -->
+  <header class="kodiak-header sticky-top py-2">
+    <div class="container-fluid px-lg-5">
+      <div class="d-flex align-items-center justify-content-between gap-3">
+        
+        <!-- Logotipo y Nombre de Marca -->
+        <a href="#hero" class="d-flex align-items-center gap-2 text-decoration-none">
+          <span class="brand-badge"><i class="fa-solid fa-bolt"></i> KODIAK</span>
+          <span class="brand-text d-none d-sm-inline">FORCELAB</span>
+        </a>
+
+        <!-- Buscador Reactivo en Tiempo Real -->
+        <div class="search-container d-none d-md-block flex-grow-1 mx-3">
+          <input type="text" id="mainSearchInput" class="form-control search-input" placeholder="Buscar por nombre, categoría o especificación técnica...">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        </div>
+
+        <!-- Acciones: Simulador Google Auth, Comparador y Carrito -->
+        <div class="d-flex align-items-center gap-2">
+          
+          <!-- Slot de Perfil / Google Identity Services -->
+          <div id="user-profile-slot"></div>
+
+          <!-- Botón de Comparador -->
+          <button class="btn btn-outline-info btn-sm position-relative px-3" onclick="window.kodiakStore.openComparisonModal()" title="Ver tabla de comparación">
+            <i class="fa-solid fa-code-compare me-1"></i>
+            <span class="d-none d-lg-inline">Comparar</span>
+            <span id="compareBadgeCount" class="badge bg-info text-dark ms-1">0</span>
+          </button>
+
+          <!-- Botón de Carrito con Offcanvas Trigger -->
+          <button class="btn btn-kodiak-cart" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+            <i class="fa-solid fa-cart-shopping me-1"></i>
+            <span class="d-none d-sm-inline">Carrito</span>
+            <span id="cartBadgeCount" class="cart-count-badge">0</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Buscador para Móviles -->
+      <div class="d-md-none mt-2">
+        <div class="search-container">
+          <input type="text" oninput="document.getElementById('mainSearchInput').value = this.value; window.kodiakStore.filterCatalog();" class="form-control search-input" placeholder="Buscar producto...">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       2. NAVEGACIÓN SEMÁNTICA POR CATEGORÍAS (<nav>)
+       ======================================================================== -->
+  <nav class="category-nav-bar" aria-label="Navegación de Categorías">
+    <div class="container-fluid px-lg-5 overflow-auto">
+      <div class="d-flex gap-2 py-1">
+        <a href="#" class="cat-nav-link active" data-cat="all"><i class="fa-solid fa-layer-group me-1"></i> Todos</a>
+        <a href="#" class="cat-nav-link" data-cat="armwrestling"><i class="fa-solid fa-hand-fist me-1"></i> Armwrestling & Agarre</a>
+        <a href="#" class="cat-nav-link" data-cat="fuerza"><i class="fa-solid fa-dumbbell me-1"></i> Fuerza & Powerlifting</a>
+        <a href="#" class="cat-nav-link" data-cat="suplementos"><i class="fa-solid fa-flask me-1"></i> Suplementación Biomecánica</a>
+        <a href="#" class="cat-nav-link" data-cat="accesorios"><i class="fa-solid fa-shield-halved me-1"></i> Soportes & Accesorios</a>
+        <a href="#laboratorio-3d" class="cat-nav-link text-info"><i class="fa-solid fa-cube me-1"></i> Laboratorio 3D</a>
+        <a href="#contacto" class="cat-nav-link text-warning"><i class="fa-solid fa-envelope me-1"></i> Contacto</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========================================================================
+       3. CONTENIDO PRINCIPAL (<main>)
+       ======================================================================== -->
+  <main>
+
+    <!-- SECTION: HERO BANNER -->
+    <section id="hero" class="hero-section">
+      <div class="container-fluid px-lg-5">
+        <div class="row align-items-center gy-4">
+          <div class="col-lg-7">
+            <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 px-3 py-2 rounded-pill fw-bold mb-3">
+              <i class="fa-solid fa-microchip me-1"></i> INGENIERÍA BIOMECÁNICA & RENDIMIENTO EXTREMO
+            </span>
+            <h1 class="hero-title text-white mb-3">
+              EQUIPAMIENTO DE <span class="highlight-lime">FUERZA</span> Y <span class="highlight-cyan">PRECISIÓN</span>
+            </h1>
+            <p class="hero-subtitle mb-4">
+              Diseñado bajo estrictos principios de biomecánica articular, palancas óseas y resistencia balística. Cada equipo está calibrado para atletas de potencia, powerlifting y lucha de brazos profesional.
+            </p>
+            <div class="d-flex flex-wrap gap-3">
+              <a href="#catalogo" class="btn btn-kodiak-primary">
+                <i class="fa-solid fa-fire me-2"></i> Explorar Catálogo
+              </a>
+              <a href="#laboratorio-3d" class="btn btn-kodiak-outline">
+                <i class="fa-solid fa-cube me-2"></i> Inspeccionar en 3D
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="row g-3">
+              <div class="col-6">
+                <div class="hero-stat-card">
+                  <div class="hero-stat-num">500 KG</div>
+                  <div class="small text-secondary fw-semibold">Tensión Balística</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="hero-stat-card">
+                  <div class="hero-stat-num">100%</div>
+                  <div class="small text-secondary fw-semibold">Pureza Certificada</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="hero-stat-card">
+                  <div class="hero-stat-num">10 MM</div>
+                  <div class="small text-secondary fw-semibold">Cuero Powerlifting</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="hero-stat-card">
+                  <div class="hero-stat-num">3FN</div>
+                  <div class="small text-secondary fw-semibold">Arquitectura Limpia</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: CATÁLOGO Y ASIDE DE FILTROS -->
+    <section id="catalogo" class="py-5">
+      <div class="container-fluid px-lg-5">
+        <div class="row gy-4">
+
+          <!-- ASIDE SEMÁNTICO: FILTROS LATERALES (<aside>) -->
+          <aside class="col-lg-3">
+            <div class="p-4 rounded-4 bg-dark bg-opacity-50 border border-secondary border-opacity-25 sticky-top" style="top: 80px;">
+              <h4 class="text-white mb-3 d-flex align-items-center gap-2">
+                <i class="fa-solid fa-sliders text-success"></i> Filtros de Selección
+              </h4>
+
+              <!-- Slider de Precio Máximo -->
+              <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <label for="priceFilterRange" class="form-label small fw-bold text-secondary mb-0">Precio Máximo (USD)</label>
+                  <span id="priceFilterValue" class="badge bg-success bg-opacity-25 text-success fw-bold">$250</span>
+                </div>
+                <input type="range" class="form-range" id="priceFilterRange" min="15" max="250" step="5" value="250">
+              </div>
+
+              <!-- Ordenamiento -->
+              <div class="mb-4">
+                <label for="sortSelect" class="form-label small fw-bold text-secondary">Ordenar Catálogo</label>
+                <select id="sortSelect" class="form-select bg-dark text-white border-secondary">
+                  <option value="default">Relevancia / Destacados</option>
+                  <option value="price-asc">Precio: Menor a Mayor</option>
+                  <option value="price-desc">Precio: Mayor a Menor</option>
+                  <option value="rating-desc">Mejor Calificación</option>
+                </select>
+              </div>
+
+              <!-- Certificación y Garantía Oficial -->
+              <div class="p-3 rounded-3 bg-success bg-opacity-10 border border-success border-opacity-25 mt-4">
+                <h6 class="text-success fw-bold mb-1"><i class="fa-solid fa-shield-check me-1"></i> Certificación Kodiak Lab</h6>
+                <p class="small text-secondary mb-0">
+                  Equipos sometidos a ensayos no destructivos de fatiga y calibrados bajo especificaciones técnicas IPF e ISO 9001.
+                </p>
+              </div>
+            </div>
+          </aside>
+
+          <!-- ARTÍCULOS DE PRODUCTOS (<article>) -->
+          <div class="col-lg-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div>
+                <h2 class="text-white mb-0">Catálogo de Equipamiento Oficial</h2>
+                <p class="text-secondary small mb-0">Haz clic en la imagen para explorar el aumento microscópico con zoom dinámico.</p>
+              </div>
+            </div>
+
+            <!-- Grilla Dinámica de Artículos -->
+            <div id="productGrid" class="row"></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: LABORATORIO 3D INTERACTIVO CON THREE.JS -->
+    <section id="laboratorio-3d" class="py-5 border-top border-secondary border-opacity-25">
+      <div class="container-fluid px-lg-5">
+        <div class="text-center mb-4">
+          <span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-50 px-3 py-2 rounded-pill fw-bold mb-2">
+            <i class="fa-solid fa-cube me-1"></i> RENDERIZADO WEBGL EN TIEMPO REAL
+          </span>
+          <h2 class="text-white">Laboratorio 3D: Inspección Geométrica</h2>
+          <p class="text-secondary mx-auto" style="max-width: 650px;">
+            Manipula el modelo 3D de la Mancuerna Hexagonal de Competición en órbita tridimensional. Usa el ratón o pantalla táctil para girar, acercar o cambiar el acabado metálico.
+          </p>
+        </div>
+
+        <div class="lab-3d-wrapper">
+          <!-- Canvas WebGL donde Three.js dibuja la escena -->
+          <div id="threejs-canvas-viewport"></div>
+
+          <!-- Controles Superpuestos -->
+          <div class="controls-overlay-3d">
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+              <span class="small fw-bold text-secondary">Acabado Material:</span>
+              <button class="btn-3d-toggle active" onclick="window.kodiakStore.threeViewer.setMaterial('black'); this.parentElement.querySelectorAll('.btn-3d-toggle').forEach(b => b.classList.remove('active')); this.classList.add('active');">
+                Negro Táctico
+              </button>
+              <button class="btn-3d-toggle" onclick="window.kodiakStore.threeViewer.setMaterial('chrome'); this.parentElement.querySelectorAll('.btn-3d-toggle').forEach(b => b.classList.remove('active')); this.classList.add('active');">
+                Acero Cromado
+              </button>
+              <button class="btn-3d-toggle" onclick="window.kodiakStore.threeViewer.setMaterial('gold'); this.parentElement.querySelectorAll('.btn-3d-toggle').forEach(b => b.classList.remove('active')); this.classList.add('active');">
+                Titanio Dorado
+              </button>
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+              <button class="btn btn-sm btn-outline-light" onclick="const st = window.kodiakStore.threeViewer.toggleAutoRotate(); this.innerHTML = st ? '<i class=\'fa-solid fa-pause me-1\'></i> Pausar Giro' : '<i class=\'fa-solid fa-play me-1\'></i> Auto-Giro';">
+                <i class="fa-solid fa-pause me-1"></i> Pausar Giro
+              </button>
+              <button class="btn btn-sm btn-outline-info" onclick="window.kodiakStore.threeViewer.resetCamera()">
+                <i class="fa-solid fa-rotate-left me-1"></i> Centrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: CONTACTO SEMÁNTICO -->
+    <section id="contacto" class="py-5 border-top border-secondary border-opacity-25">
+      <div class="container-fluid px-lg-5">
+        <div class="row gy-4 align-items-center">
+          <div class="col-lg-5">
+            <span class="badge bg-warning bg-opacity-25 text-warning border border-warning border-opacity-50 px-3 py-2 rounded-pill fw-bold mb-3">
+              <i class="fa-solid fa-headset me-1"></i> ATENCIÓN Y SOPORTE DIRECTO
+            </span>
+            <h2 class="text-white mb-3">¿Requieres Asesoría Biomecánica o Pedidos Especiales?</h2>
+            <p class="text-secondary mb-4">
+              Contáctanos directamente para configuraciones personalizadas de mesas de armwrestling, barras olímpicas con moleteado a medida o cálculo de volúmenes de carga.
+            </p>
+            <div class="d-flex flex-column gap-3">
+              <div class="d-flex align-items-center gap-3">
+                <div class="p-3 rounded-3 bg-dark border border-secondary border-opacity-25 text-success">
+                  <i class="fa-solid fa-location-dot fa-lg"></i>
+                </div>
+                <div>
+                  <h6 class="text-white mb-0">Sede Principal</h6>
+                  <span class="small text-secondary">Caracas, Venezuela // Centro de Distribución y Almacén Central</span>
+                </div>
+              </div>
+              <div class="d-flex align-items-center gap-3">
+                <div class="p-3 rounded-3 bg-dark border border-secondary border-opacity-25 text-info">
+                  <i class="fa-solid fa-envelope fa-lg"></i>
+                </div>
+                <div>
+                  <h6 class="text-white mb-0">Correo Electrónico</h6>
+                  <span class="small text-secondary">contacto@kodiakforcelab.com // ventas@kodiakforcelab.com</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-7">
+            <div class="contact-box">
+              <h4 class="text-white mb-3">Formulario de Contacto</h4>
+              <form id="kodiakContactForm">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label small text-secondary">Nombre y Apellido</label>
+                    <input type="text" class="form-control form-control-kodiak" required placeholder="Ej: Gabriel Hazim">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small text-secondary">Correo Electrónico</label>
+                    <input type="email" class="form-control form-control-kodiak" required placeholder="tuemail@ejemplo.com">
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label small text-secondary">Asunto</label>
+                    <input type="text" class="form-control form-control-kodiak" required placeholder="Ej: Consulta sobre Correas Kodiak Pro">
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label small text-secondary">Mensaje o Especificación Técnica</label>
+                    <textarea class="form-control form-control-kodiak" rows="4" required placeholder="Escribe aquí tu consulta detallada..."></textarea>
+                  </div>
+                  <div class="col-12 text-end">
+                    <button type="submit" class="btn btn-kodiak-primary px-4">
+                      <i class="fa-solid fa-paper-plane me-2"></i> Enviar Mensaje
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       4. FOOTER SEMÁNTICO (<footer>)
+       ======================================================================== -->
+  <footer class="main-footer">
+    <div class="container-fluid px-lg-5">
+      <div class="row gy-4 mb-4">
+        <div class="col-md-4">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <span class="brand-badge"><i class="fa-solid fa-bolt"></i> KODIAK</span>
+            <span class="brand-text">FORCELAB</span>
+          </div>
+          <p class="small text-secondary mb-3">
+            Plataforma web de productos deportivos y biomecánica de alto impacto. Desarrollada con estándares rigurosos de accesibilidad, semántica HTML5 y rendimiento modular.
+          </p>
+          <div class="footer-enterprise-badge">
+            <strong>Kodiak ForceLab Technologies C.A.</strong><br>
+            <strong>División:</strong> Ingeniería de Fuerza y Hardware Biomecánico<br>
+            <strong>Dirección Técnica:</strong> Gabriel "Kodiak" Hazim Martínez
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <h5 class="text-white mb-3">Métodos de Pago Simulados</h5>
+          <ul class="list-unstyled small text-secondary">
+            <li class="mb-2"><i class="fa-solid fa-mobile-screen-button text-success me-2"></i> <strong>Pago Móvil:</strong> Tasa oficial BCV instantánea.</li>
+            <li class="mb-2"><i class="fa-solid fa-handshake text-info me-2"></i> <strong>Cashea:</strong> Pago en 3 cuotas quincenales sin interés.</li>
+            <li class="mb-2"><i class="fa-solid fa-credit-card text-warning me-2"></i> <strong>Tarjeta de Crédito / Débito:</strong> Validación Luhn en vivo.</li>
+            <li class="mb-2"><i class="fa-brands fa-google text-danger me-2"></i> <strong>Google Pay / Sign-In:</strong> Integración OAuth simulada.</li>
+          </ul>
+        </div>
+
+        <div class="col-md-4">
+          <h5 class="text-white mb-3">Garantía y Seguridad</h5>
+          <p class="small text-secondary mb-3">
+            Todos los equipos cuentan con respaldo de calidad estructural y certificación de carga.
+          </p>
+          <div class="d-flex gap-3 fs-4 text-secondary">
+            <a href="#" class="text-secondary"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="text-secondary"><i class="fa-brands fa-telegram"></i></a>
+            <a href="#" class="text-secondary"><i class="fa-brands fa-github"></i></a>
+            <a href="#" class="text-secondary"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-top border-secondary border-opacity-25 pt-3 text-center small text-secondary">
+        &copy; 2026 Kodiak ForceLab C.A. — Desarrollado por Gabriel "Kodiak" Hazim Martínez. Todos los derechos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       5. OFFCANVAS: CARRITO DE COMPRAS
+       ======================================================================== -->
+  <div class="offcanvas offcanvas-end offcanvas-cart" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
+    <div class="offcanvas-header border-bottom border-secondary border-opacity-25">
+      <h5 class="offcanvas-title text-white fw-bold" id="offcanvasCartLabel">
+        <i class="fa-solid fa-cart-shopping text-success me-2"></i> Tu Carrito de Compra
+      </h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    
+    <div class="offcanvas-body d-flex flex-column">
+      <!-- Lista Dinámica de Artículos -->
+      <div id="cartItemsList" class="flex-grow-1 overflow-auto pe-2"></div>
+
+      <!-- Cupón de Descuento -->
+      <div class="pt-3 border-top border-secondary border-opacity-25">
+        <label for="couponCodeInput" class="form-label small fw-bold text-secondary">¿Tienes un cupón?</label>
+        <div class="input-group input-group-sm mb-1">
+          <input type="text" id="couponCodeInput" class="form-control bg-dark text-white border-secondary" placeholder="Ej: KODIAK10 o ELITE2026">
+          <button class="btn btn-outline-success" type="button" onclick="window.kodiakStore.applyCoupon()">Aplicar</button>
+        </div>
+        <div id="couponFeedbackMsg"></div>
+      </div>
+
+      <!-- Desglose Económico -->
+      <div class="pt-3 border-top border-secondary border-opacity-25 mt-2">
+        <div class="d-flex justify-content-between small text-secondary mb-1">
+          <span>Subtotal:</span>
+          <span id="cartSubtotal" class="text-white fw-bold">$0.00</span>
+        </div>
+        <div class="d-flex justify-content-between small text-secondary mb-1">
+          <span>Descuento aplicado:</span>
+          <span id="cartDiscount" class="text-success fw-bold">-$0.00</span>
+        </div>
+        <div class="d-flex justify-content-between small text-secondary mb-1">
+          <span>IVA Estimado (16%):</span>
+          <span id="cartTax" class="text-white fw-bold">$0.00</span>
+        </div>
+        <div class="d-flex justify-content-between fs-5 text-white fw-bold mt-2 pt-2 border-top border-secondary border-opacity-25">
+          <span>Total USD:</span>
+          <span id="cartTotal" class="text-success">$0.00</span>
+        </div>
+        <div class="d-flex justify-content-between small text-info fw-bold mb-3">
+          <span>Total en Bs. (BCV):</span>
+          <span id="cartTotalBs">Bs. 0.00</span>
+        </div>
+
+        <button class="btn btn-kodiak-primary w-100 py-3" onclick="window.kodiakStore.openCheckoutModal()">
+          <i class="fa-solid fa-lock me-2"></i> Proceder al Pago (Checkout)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       6. MODAL: DETALLES CON ZOOM ESTILO MERCADO LIBRE
+       ======================================================================== -->
+  <div class="modal fade" id="productZoomModal" tabindex="-1" aria-labelledby="zoomModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content modal-content-kodiak">
+        <div class="modal-header modal-header-kodiak">
+          <h4 class="modal-title text-white fw-bold" id="zoomModalTitle">Detalle del Producto</h4>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <div class="row gy-4 align-items-center">
+            
+            <!-- Columna Izquierda: Visor con Lente de Aumento Interactiva -->
+            <div class="col-lg-6 position-relative">
+              <div id="zoomInteractiveBox" class="zoom-interactive-container">
+                <img id="zoomTargetImageEl" src="" alt="Producto Detalle" class="zoom-target-image">
+                <!-- Lente que sigue el cursor -->
+                <div id="zoomLensIndicator" class="zoom-lens-box"></div>
+              </div>
+              <p class="text-center small text-secondary mt-2 mb-0">
+                <i class="fa-solid fa-magnifying-glass me-1"></i> Pasa el cursor por encima para activar el Zoom de Alta Precisión.
+              </p>
+
+              <!-- Ventana Flyout de Aumento (Proyección lateral estilo Mercado Libre) -->
+              <div id="zoomFlyoutPreview" class="zoom-flyout-window"></div>
+            </div>
+
+            <!-- Columna Derecha: Especificaciones y Compra -->
+            <div class="col-lg-6">
+              <div class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 px-3 py-1 mb-2">
+                FICHA TÉCNICA BIOMECÁNICA
+              </div>
+              <h3 id="zoomModalPrice" class="text-success fw-bold mb-3"></h3>
+              <p id="zoomModalDesc" class="text-secondary mb-4"></p>
+
+              <h5 class="text-white mb-2">Especificaciones de Fábrica:</h5>
+              <ul id="zoomModalSpecs" class="list-unstyled small text-white mb-4"></ul>
+
+              <div class="d-flex gap-3">
+                <button id="zoomModalAddToCartBtn" class="btn btn-kodiak-primary flex-grow-1 py-3">
+                  <i class="fa-solid fa-cart-plus me-2"></i> Agregar a mi Carrito
+                </button>
+                <button type="button" class="btn btn-outline-light px-4" data-bs-dismiss="modal">
+                  Cerrar
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       7. MODAL: COMPARADOR DE PRODUCTOS
+       ======================================================================== -->
+  <div class="modal fade" id="comparisonModal" tabindex="-1" aria-labelledby="comparisonModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content modal-content-kodiak">
+        <div class="modal-header modal-header-kodiak">
+          <h4 class="modal-title text-white fw-bold" id="comparisonModalTitle">
+            <i class="fa-solid fa-code-compare text-info me-2"></i> Matriz Comparativa de Rendimiento
+          </h4>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <div class="comparison-table-wrapper">
+            <table class="table comparison-table align-middle">
+              <tbody id="comparisonTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       8. MODAL: PASARELA DE CHECKOUT (PAGO SIMULADO MULTI-MÉTODO)
+       ======================================================================== -->
+  <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content modal-content-kodiak">
+        <div class="modal-header modal-header-kodiak">
+          <h4 class="modal-title text-white fw-bold" id="checkoutModalTitle">
+            <i class="fa-solid fa-shield-check text-success me-2"></i> Registro de Compra y Checkout Seguro
+          </h4>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form onsubmit="window.kodiakStore.processCheckoutOrder(event)">
+            
+            <!-- Datos del Comprador -->
+            <h5 class="text-white mb-3"><i class="fa-solid fa-user me-2 text-info"></i> Datos del Comprador</h5>
+            <div class="row g-3 mb-4">
+              <div class="col-md-6">
+                <label for="checkoutBuyerName" class="form-label small text-secondary">Nombre Completo</label>
+                <input type="text" id="checkoutBuyerName" class="form-control form-control-kodiak" required placeholder="Gabriel Zaul Hazim">
+              </div>
+              <div class="col-md-6">
+                <label for="checkoutBuyerDni" class="form-label small text-secondary">Cédula de Identidad / RIF</label>
+                <input type="text" id="checkoutBuyerDni" class="form-control form-control-kodiak" required placeholder="V-30.123.456">
+              </div>
+              <div class="col-md-6">
+                <label for="checkoutBuyerPhone" class="form-label small text-secondary">Teléfono de Contacto</label>
+                <input type="tel" id="checkoutBuyerPhone" class="form-control form-control-kodiak" required placeholder="0414-1234567">
+              </div>
+              <div class="col-md-6">
+                <label for="checkoutBuyerEmail" class="form-label small text-secondary">Correo Electrónico</label>
+                <input type="email" id="checkoutBuyerEmail" class="form-control form-control-kodiak" required placeholder="gabriel@kodiak.com">
+              </div>
+              <div class="col-12">
+                <label for="checkoutBuyerAddress" class="form-label small text-secondary">Dirección de Entrega / Despacho</label>
+                <input type="text" id="checkoutBuyerAddress" class="form-control form-control-kodiak" required placeholder="Caracas, Municipio Libertador, Sede IUTV">
+              </div>
+            </div>
+
+            <!-- Selección de Método de Pago -->
+            <h5 class="text-white mb-3"><i class="fa-solid fa-wallet me-2 text-warning"></i> Selecciona Método de Pago</h5>
+            <div class="row g-2 mb-4">
+              <div class="col-4">
+                <div class="payment-tab-btn active" data-payment-method="pagomovil">
+                  <i class="fa-solid fa-mobile-screen-button fa-lg d-block mb-1"></i>
+                  Pago Móvil
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="payment-tab-btn" data-payment-method="cashea">
+                  <i class="fa-solid fa-handshake fa-lg d-block mb-1"></i>
+                  Cashea (3 Cuotas)
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="payment-tab-btn" data-payment-method="tarjeta">
+                  <i class="fa-solid fa-credit-card fa-lg d-block mb-1"></i>
+                  Tarjeta
+                </div>
+              </div>
+            </div>
+
+            <!-- PANE 1: PAGO MÓVIL -->
+            <div id="pane-pagomovil" class="payment-form-pane p-3 rounded-3 bg-dark border border-secondary border-opacity-25 mb-4">
+              <div class="small text-secondary mb-2">
+                Realiza la transferencia interbancaria al siguiente receptor oficial:
+              </div>
+              <div class="p-2 rounded bg-secondary bg-opacity-10 small text-white mb-3">
+                <strong>Banco:</strong> Banesco (0134) | <strong>Teléfono:</strong> 0414-1070745<br>
+                <strong>RIF:</strong> J-50493821-0 | <strong>Beneficiario:</strong> Kodiak ForceLab C.A.
+              </div>
+              <div class="row g-2">
+                <div class="col-md-6">
+                  <label class="form-label small text-secondary">Banco Emisor</label>
+                  <select class="form-select bg-dark text-white border-secondary small">
+                    <option>Banesco</option>
+                    <option>Banco de Venezuela</option>
+                    <option>Mercantil</option>
+                    <option>BNC</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small text-secondary">Número de Referencia (Últimos 6 dígitos)</label>
+                  <input type="text" class="form-control form-control-kodiak" placeholder="Ej: 849204" maxlength="8">
+                </div>
+              </div>
+            </div>
+
+            <!-- PANE 2: CASHEA -->
+            <div id="pane-cashea" class="payment-form-pane d-none p-3 rounded-3 bg-dark border border-secondary border-opacity-25 mb-4">
+              <div class="d-flex align-items-center gap-2 mb-2 text-warning fw-bold">
+                <i class="fa-solid fa-calendar-check"></i> Plan Cashea: 3 Cuotas Quincenales sin Interés
+              </div>
+              <p class="small text-secondary mb-3">
+                Paga hoy la inicial del 40% y divide el resto en 3 pagos iguales cada 14 días.
+              </p>
+              <div class="p-2 rounded bg-warning bg-opacity-10 text-warning small">
+                ✓ Inicial a Pagar Hoy: Calculada automáticamente al procesar.<br>
+                ✓ Cuotas: Se descontarán quincenalmente de tu línea de compra Cashea.
+              </div>
+            </div>
+
+            <!-- PANE 3: TARJETA DE CRÉDITO CON PREVIEW EN TIEMPO REAL -->
+            <div id="pane-tarjeta" class="payment-form-pane d-none mb-4">
+              <div class="credit-card-preview">
+                <div class="card-chip"></div>
+                <div id="ccPreviewNumber" class="card-number-display">•••• •••• •••• ••••</div>
+                <div class="d-flex justify-content-between align-items-end">
+                  <div>
+                    <div class="small opacity-75" style="font-size: 0.7rem;">TITULAR</div>
+                    <div id="ccPreviewName" class="fw-bold text-uppercase small">NOMBRE DEL TITULAR</div>
+                  </div>
+                  <div>
+                    <div class="small opacity-75" style="font-size: 0.7rem;">VENCE</div>
+                    <div id="ccPreviewExp" class="fw-bold small">MM/AA</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-2">
+                <div class="col-12">
+                  <label class="form-label small text-secondary">Número de Tarjeta</label>
+                  <input type="text" id="cardNumInput" class="form-control form-control-kodiak" placeholder="4532 8901 2345 6789" maxlength="19">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small text-secondary">Nombre Impreso</label>
+                  <input type="text" id="cardHolderInput" class="form-control form-control-kodiak" placeholder="GABRIEL HAZIM">
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label small text-secondary">Expiración</label>
+                  <input type="text" id="cardExpInput" class="form-control form-control-kodiak" placeholder="10/28" maxlength="5">
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label small text-secondary">CVV</label>
+                  <input type="password" class="form-control form-control-kodiak" placeholder="•••" maxlength="4">
+                </div>
+              </div>
+            </div>
+
+            <!-- Botón de Confirmación -->
+            <button type="submit" class="btn btn-kodiak-primary w-100 py-3 fs-5">
+              <i class="fa-solid fa-check-circle me-2"></i> Confirmar y Generar Factura Fiscal
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       9. MODAL: FACTURA / TICKET FISCAL DIGITAL GENERADO
+       ======================================================================== -->
+  <div class="modal fade" id="receiptModal" tabindex="-1" aria-labelledby="receiptModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+      <div class="modal-content bg-transparent border-0">
+        <div class="modal-body p-0">
+          <div class="invoice-ticket" id="receiptInvoiceContent"></div>
+          <div class="d-flex gap-2 mt-4">
+            <button class="btn btn-light flex-grow-1" onclick="window.print()">
+              <i class="fa-solid fa-print me-1"></i> Imprimir / Guardar PDF
+            </button>
+            <button class="btn btn-secondary px-4" data-bs-dismiss="modal">
+              Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       10. MODAL: SIMULADOR DE INICIO DE SESIÓN CON GOOGLE (OAuth 2.0)
+       ======================================================================== -->
+  <div class="modal fade" id="googleAuthModal" tabindex="-1" aria-labelledby="googleAuthModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-content bg-dark border-secondary p-3 text-center">
+        <div class="mb-3">
+          <svg width="40" height="40" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.97 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+          </svg>
+          <h5 class="text-white mt-2 mb-1">Acceder con Google</h5>
+          <p class="small text-secondary mb-0">Selecciona la cuenta para vincular tu perfil de atleta:</p>
+        </div>
+
+        <div class="d-flex flex-column gap-2">
+          <!-- Cuenta 1: Gabriel Hazim -->
+          <button class="btn btn-outline-light text-start p-2 d-flex align-items-center gap-3 border-secondary" onclick="window.kodiakAuth.simulateLoginAs('kodiak')">
+            <div class="rounded-circle bg-success text-dark fw-bold d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">G</div>
+            <div class="overflow-hidden">
+              <div class="small fw-bold text-white text-truncate">Gabriel Zaul Hazim</div>
+              <div class="small text-secondary text-truncate" style="font-size: 0.75rem;">gabrielkodiak@gmail.com</div>
+            </div>
+          </button>
+
+          <!-- Cuenta 2: Atleta Profesional VIP -->
+          <button class="btn btn-outline-light text-start p-2 d-flex align-items-center gap-3 border-secondary" onclick="window.kodiakAuth.simulateLoginAs('invitado')">
+            <div class="rounded-circle bg-info text-dark fw-bold d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">V</div>
+            <div class="overflow-hidden">
+              <div class="small fw-bold text-white text-truncate">Atleta Profesional VIP</div>
+              <div class="small text-secondary text-truncate" style="font-size: 0.75rem;">cliente.vip@kodiakforce.com</div>
+            </div>
+          </button>
+        </div>
+
+        <button type="button" class="btn btn-sm btn-link text-secondary mt-3" data-bs-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       11. TOAST NOTIFICACIONES RÁPIDAS
+       ======================================================================== -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1090;">
+    <div id="kodiakLiveToast" class="toast align-items-center text-bg-dark border border-success border-opacity-50" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body text-white">
+          <i class="fa-solid fa-circle-check text-success me-2"></i>
+          <span id="kodiakToastMsg">Acción completada</span>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       12. SCRIPTS EXTERNOS Y LIBRERÍAS
+       ======================================================================== -->
+  <!-- Bootstrap 5.3.3 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Three.js (r128) para el Renderizado 3D WebGL -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Módulos de la Aplicación -->
+  <script src="js/zoom.js"></script>
+  <script src="js/three_viewer.js"></script>
+  <script src="js/auth_simulator.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

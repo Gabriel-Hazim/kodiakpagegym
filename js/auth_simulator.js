@@ -46,6 +46,31 @@ function safeCloseModal(modalId) {
 }
 window.safeCloseModal = safeCloseModal;
 
+/**
+ * Generador procedural de avatares deportivos vectoriales (Emojis + Colores vibrantes).
+ * Cero fotos de personas, 100% independiente de internet y compatible con navegadores.
+ */
+function generateEmojiAvatar(emoji, bgColor = '#00ff88') {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="48" fill="${bgColor}" stroke="#0a0e17" stroke-width="4"/>
+    <text x="50" y="58" font-size="50" text-anchor="middle" dominant-baseline="middle">${emoji}</text>
+  </svg>`;
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+
+function getRandomSportsAvatar(seedText = '') {
+  const emojis = ['🐻', '⚡', '🏋️', '🦾', '🔥', '🏆', '💪', '🥇', '🥋', '🥊'];
+  const colors = ['#00ff88', '#00e5ff', '#ffb703', '#ff0055', '#7b2cbf', '#3a86ff', '#06d6a0'];
+  
+  let hash = 0;
+  for (let i = 0; i < seedText.length; i++) {
+    hash = seedText.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const emoji = emojis[Math.abs(hash) % emojis.length];
+  const color = colors[Math.abs(hash * 3) % colors.length];
+  return generateEmojiAvatar(emoji, color);
+}
+
 class GoogleAuthSimulator {
   constructor() {
     this.storageKey = 'kodiak_user_session';
@@ -58,7 +83,16 @@ class GoogleAuthSimulator {
   loadSession() {
     try {
       const data = localStorage.getItem(this.storageKey);
-      return data ? JSON.parse(data) : null;
+      if (!data) return null;
+      const parsed = JSON.parse(data);
+      // Migración automática: si la sesión previa tenía foto de persona, reemplazar por avatar deportivo
+      if (parsed && parsed.picture && (parsed.picture.includes('unsplash.com') || parsed.picture.includes('ui-avatars.com'))) {
+        parsed.picture = parsed.name.includes('Kodiak') || parsed.name.includes('Gabriel') 
+          ? generateEmojiAvatar('🐻', '#00ff88') 
+          : getRandomSportsAvatar(parsed.name || 'Atleta');
+        localStorage.setItem(this.storageKey, JSON.stringify(parsed));
+      }
+      return parsed;
     } catch (e) {
       console.error('[GoogleAuth] Error al leer sesión', e);
       return null;
@@ -231,7 +265,7 @@ class GoogleAuthSimulator {
         sub: payload.sub,
         name: payload.name || 'Atleta Google',
         email: payload.email,
-        picture: payload.picture || `https://ui-avatars.com/api/?name=${encodeURIComponent(payload.name || 'G')}&background=00ff88&color=0a0e17&bold=true`,
+        picture: getRandomSportsAvatar(payload.name || payload.email || 'G'),
         verified_email: payload.email_verified || true,
         auth_provider: 'Google Official GIS (En Vivo)',
         role: 'Atleta Verificado Google',
@@ -266,7 +300,7 @@ class GoogleAuthSimulator {
         sub: 'google_oauth2_108492019482',
         name: 'Gabriel Zaul Hazim',
         email: 'gabrielkodiak@gmail.com',
-        picture: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face',
+        picture: generateEmojiAvatar('🐻', '#00ff88'),
         verified_email: true,
         auth_provider: 'Google Identity Service',
         role: 'Atleta Fundador // Ing. de Software',
@@ -277,7 +311,7 @@ class GoogleAuthSimulator {
         sub: 'google_oauth2_910482019481',
         name: 'Carlos Mendoza',
         email: 'carlos.atleta@gmail.com',
-        picture: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
+        picture: generateEmojiAvatar('⚡', '#00e5ff'),
         verified_email: true,
         auth_provider: 'Google Identity Service',
         role: 'Atleta de Competición VIP',
@@ -342,7 +376,7 @@ class GoogleAuthSimulator {
       sub: `google_oauth2_${Math.floor(1000000000 + Math.random() * 9000000000)}`,
       name: customName.trim(),
       email: customEmail.trim(),
-      picture: `https://ui-avatars.com/api/?name=${encodeURIComponent(customName.trim())}&background=00ff88&color=0a0e17&bold=true`,
+      picture: getRandomSportsAvatar(customName + customEmail),
       verified_email: true,
       auth_provider: 'Google Identity Service',
       role: 'Atleta Verificado',

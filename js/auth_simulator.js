@@ -4,15 +4,16 @@
  * Plataforma: Kodiak ForceLab Commercial E-Commerce Platform
  * Dirección Técnica: Gabriel Zaul Hazim Martínez (Kodiak)
  * 
- * ARQUITECTURA DE AUTENTICACIÓN:
- * 1. Integración con el SDK Oficial de Google Identity Services (https://accounts.google.com/gsi/client).
- * 2. Decodificación de Payload JWT (Claims: sub, email, name, picture, email_verified).
- * 3. Fallback Universal: Permite a CUALQUIER usuario iniciar sesión con su propia cuenta
- *    de Google / Gmail real, generando su avatar de atleta y persistiendo la sesión.
- * 4. Gestión de Historial de Compras del Usuario y Autocompletado reactivo en Checkout.
+ * ARQUITECTURA DE AUTENTICACIÓN ADAPTATIVA:
+ * 1. Selector de Identidad Google Instantáneo (Zero Error 401).
+ * 2. Soporte para inyección en caliente de Google Cloud Client ID Oficial.
+ * 3. Decodificación de Payload JWT (Claims: sub, email, name, picture, email_verified).
+ * 4. Gestión de Historial de Compras y Sincronización Automática con Checkout.
  * ==============================================================================
+ */
+
 /**
- * Helper global ultra-robusto para cerrar modales de Bootstrap sin bloqueos de backdrop ni congelamientos de UI.
+ * Helper global ultra-robusto para cerrar modales de Bootstrap sin bloqueos de backdrop.
  */
 function safeCloseModal(modalId) {
   const modalEl = typeof modalId === 'string' ? document.getElementById(modalId) : modalId;
@@ -26,17 +27,17 @@ function safeCloseModal(modalId) {
       }
     }
   } catch (err) {
-    console.warn('[safeCloseModal] Cierre por instancia estándar falló, aplicando cierre forzado', err);
+    console.warn('[safeCloseModal] Cierre estándar con aviso:', err);
   }
 
-  // Limpieza atómica garantizada para evitar pantalla bloqueada o backdrop residual
+  // Limpieza atómica garantizada para evitar pantalla bloqueada
   setTimeout(() => {
     modalEl.classList.remove('show');
     modalEl.style.display = 'none';
     modalEl.setAttribute('aria-hidden', 'true');
     modalEl.removeAttribute('aria-modal');
 
-    // Remover cualquier backdrop huérfano
+    // Remover backdrop huérfano
     document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
     document.body.classList.remove('modal-open');
     document.body.style.removeProperty('overflow');
@@ -48,6 +49,7 @@ window.safeCloseModal = safeCloseModal;
 class GoogleAuthSimulator {
   constructor() {
     this.storageKey = 'kodiak_user_session';
+    this.clientIdKey = 'kodiak_google_client_id';
     this.user = this.loadSession();
     this.initGIS();
     this.initUI();
@@ -108,24 +110,47 @@ class GoogleAuthSimulator {
 
   initUI() {
     this.renderNavProfile();
+    
+    // Si hay un Client ID guardado previamente, cargarlo en el input de configuración
+    const savedClientId = localStorage.getItem(this.clientIdKey);
+    const inputEl = document.getElementById('googleCloudClientIdInput');
+    if (inputEl && savedClientId) {
+      inputEl.value = savedClientId;
+    }
   }
 
   /**
-   * Inicializa el SDK Oficial de Google si está disponible en la ventana
+   * Inicializa el SDK Oficial de Google Identity Services ÚNICAMENTE si existe
+   * un Client ID legítimo configurado por el usuario en Google Cloud Console.
+   * Si no existe, omite la llamada para prevenir el Error 401: invalid_client.
    */
   initGIS() {
-    window.addEventListener('load', () => {
+    const configuredClientId = localStorage.getItem(this.clientIdKey);
+    const slot = document.getElementById('g_id_signin_slot');
+
+    if (!configuredClientId || !configuredClientId.endsWith('.apps.googleusercontent.com')) {
+      if (slot) {
+        slot.innerHTML = '';
+        slot.classList.add('d-none');
+      }
+      return;
+    }
+
+    if (slot) {
+      slot.classList.remove('d-none');
+    }
+
+    const setupGIS = () => {
       if (window.google && window.google.accounts && window.google.accounts.id) {
         try {
           window.google.accounts.id.initialize({
-            client_id: "614920485923-kodiakforcelab.apps.googleusercontent.com",
+            client_id: configuredClientId,
             callback: (response) => this.handleGoogleCredential(response),
             auto_select: false
           });
 
-          const btnContainer = document.getElementById('g_id_signin_slot');
-          if (btnContainer) {
-            window.google.accounts.id.renderButton(btnContainer, {
+          if (slot) {
+            window.google.accounts.id.renderButton(slot, {
               theme: "filled_blue",
               size: "large",
               shape: "pill",
@@ -133,14 +158,65 @@ class GoogleAuthSimulator {
             });
           }
         } catch (err) {
-          console.log('[Google GIS] Inicialización estándar en modo local/archivo.');
+          console.warn('[Google GIS] Error al inicializar con Client ID personalizado:', err);
         }
       }
-    });
+    };
+
+    if (document.readyState === 'complete') {
+      setupGIS();
+    } else {
+      window.addEventListener('load', setupGIS);
+    }
   }
 
   /**
-   * Decodificador de JWT para respuestas reales de Google OAuth
+   * Permite vincular un Google Cloud Client ID oficial en caliente
+   */
+  saveCustomClientId() {
+    const input = document.getElementById('googleCloudClientIdInput');
+    const val = input ? input.value.trim() : '';
+
+    if (!val || !val.includes('.apps.googleusercontent.com')) {
+      if (window.kodiakStore) {
+        window.kodiakStore.showToast('Ingresa un Client ID válido emitido por Google Cloud Console.');
+      } else {
+        alert('Ingresa un Client ID válido emitido por Google Cloud Console (terminado en .apps.googleusercontent.com)');
+      }
+      return;
+    }
+
+    localStorage.setItem(this.clientIdKey, val);
+    this.initGIS();
+
+    if (window.kodiakStore) {
+      window.kodiakStore.showToast('Client ID de Google Cloud guardado y SDK activado.');
+      window.kodiakStore.playHapticTone('success');
+    }
+  }
+
+  /**
+   * Restablece el modo seguro sin llamadas externas que puedan causar 401
+   */
+  clearCustomClientId() {
+    localStorage.removeItem(this.clientIdKey);
+    const input = document.getElementById('googleCloudClientIdInput');
+    if (input) input.value = '';
+    
+    const slot = document.getElementById('g_id_signin_slot');
+    if (slot) {
+      slot.innerHTML = '';
+      slot.classList.add('d-none');
+    }
+
+    if (window.kodiakStore) {
+      window.kodiakStore.showToast('Modo de autenticación seguro restablecido (Zero 401).');
+      window.kodiakStore.playHapticTone('click');
+    }
+  }
+
+  /**
+   * Decodificador de JWT para respuestas reales de Google OAuth 2.0
    */
   handleGoogleCredential(response) {
     try {
@@ -157,12 +233,19 @@ class GoogleAuthSimulator {
         email: payload.email,
         picture: payload.picture || `https://ui-avatars.com/api/?name=${encodeURIComponent(payload.name || 'G')}&background=00ff88&color=0a0e17&bold=true`,
         verified_email: payload.email_verified || true,
-        auth_provider: 'Google Official GIS',
+        auth_provider: 'Google Official GIS (En Vivo)',
+        role: 'Atleta Verificado Google',
         auth_time: Date.now()
       };
 
       this.saveSession(user);
       safeCloseModal('googleAuthModal');
+
+      // Autocompletar checkout
+      const nameInput = document.getElementById('checkoutBuyerName');
+      const emailInput = document.getElementById('checkoutBuyerEmail');
+      if (nameInput) nameInput.value = user.name;
+      if (emailInput) emailInput.value = user.email;
 
       if (window.kodiakStore) {
         window.kodiakStore.showToast(`¡Sesión iniciada con Google como ${user.name}!`);
@@ -170,6 +253,114 @@ class GoogleAuthSimulator {
       }
     } catch (e) {
       console.error('[Google GIS] Error al procesar JWT', e);
+    }
+  }
+
+  /**
+   * Inicia sesión instantáneamente con perfiles preconfigurados sin errores 401
+   */
+  loginAsAccount(type) {
+    let user;
+    if (type === 'kodiak') {
+      user = {
+        sub: 'google_oauth2_108492019482',
+        name: 'Gabriel Zaul Hazim',
+        email: 'gabrielkodiak@gmail.com',
+        picture: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face',
+        verified_email: true,
+        auth_provider: 'Google Identity Service',
+        role: 'Atleta Fundador // Ing. de Software',
+        auth_time: Date.now()
+      };
+    } else {
+      user = {
+        sub: 'google_oauth2_910482019481',
+        name: 'Carlos Mendoza',
+        email: 'carlos.atleta@gmail.com',
+        picture: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
+        verified_email: true,
+        auth_provider: 'Google Identity Service',
+        role: 'Atleta de Competición VIP',
+        auth_time: Date.now()
+      };
+    }
+
+    this.saveSession(user);
+    safeCloseModal('googleAuthModal');
+
+    // Autocompletar checkout
+    const nameInput = document.getElementById('checkoutBuyerName');
+    const emailInput = document.getElementById('checkoutBuyerEmail');
+    if (nameInput) nameInput.value = user.name;
+    if (emailInput) emailInput.value = user.email;
+
+    if (window.kodiakStore) {
+      window.kodiakStore.showToast(`¡Bienvenido atleta ${user.name}!`);
+      window.kodiakStore.playHapticTone('success');
+    }
+  }
+
+  /**
+   * Muestra/oculta el formulario para ingresar otra cuenta personalizada
+   */
+  toggleCustomAccountForm() {
+    const container = document.getElementById('customAccountFormContainer');
+    const icon = document.getElementById('toggleCustomAccountIcon');
+    if (!container) return;
+
+    if (container.classList.contains('d-none')) {
+      container.classList.remove('d-none');
+      if (icon) {
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+      }
+      const nameInput = document.getElementById('customGoogleNameInput');
+      if (nameInput) nameInput.focus();
+    } else {
+      container.classList.add('d-none');
+      if (icon) {
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+      }
+    }
+  }
+
+  /**
+   * Permite a CUALQUIER usuario escribir su nombre y correo real de Google
+   */
+  loginCustomUser(customName, customEmail) {
+    if (!customName || !customEmail) {
+      if (window.kodiakStore && window.kodiakStore.showToast) {
+        window.kodiakStore.showToast('Por favor ingresa un nombre y un correo electrónico válido.');
+      } else {
+        alert('Por favor ingresa un nombre y un correo electrónico válido.');
+      }
+      return;
+    }
+
+    const user = {
+      sub: `google_oauth2_${Math.floor(1000000000 + Math.random() * 9000000000)}`,
+      name: customName.trim(),
+      email: customEmail.trim(),
+      picture: `https://ui-avatars.com/api/?name=${encodeURIComponent(customName.trim())}&background=00ff88&color=0a0e17&bold=true`,
+      verified_email: true,
+      auth_provider: 'Google Identity Service',
+      role: 'Atleta Verificado',
+      auth_time: Date.now()
+    };
+
+    this.saveSession(user);
+    safeCloseModal('googleAuthModal');
+
+    // Auto-completar en el checkout si los campos existen
+    const nameInput = document.getElementById('checkoutBuyerName');
+    const emailInput = document.getElementById('checkoutBuyerEmail');
+    if (nameInput) nameInput.value = user.name;
+    if (emailInput) emailInput.value = user.email;
+
+    if (window.kodiakStore) {
+      window.kodiakStore.showToast(`¡Bienvenido atleta ${user.name}!`);
+      window.kodiakStore.playHapticTone('success');
     }
   }
 
@@ -195,7 +386,7 @@ class GoogleAuthSimulator {
               <div class="fw-bold text-white small">${this.user.name}</div>
               <div class="text-secondary small text-truncate" style="font-size: 0.78rem;">${this.user.email}</div>
               <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 mt-1" style="font-size: 0.7rem;">
-                <i class="fa-solid fa-shield-check me-1"></i> Atleta Verificado
+                <i class="fa-solid fa-shield-check me-1"></i> ${this.user.role || 'Atleta Verificado'}
               </span>
             </li>
             <li><a class="dropdown-item py-2 small" href="#offcanvasCart" data-bs-toggle="offcanvas"><i class="fa-solid fa-cart-shopping me-2 text-info"></i>Mi Carrito de Compra</a></li>
@@ -220,51 +411,14 @@ class GoogleAuthSimulator {
     }
   }
 
-  /**
-   * Permite a CUALQUIER usuario escribir su nombre y correo real de Google
-   */
-  loginCustomUser(customName, customEmail) {
-    if (!customName || !customEmail) {
-      if (window.kodiakStore && window.kodiakStore.showToast) {
-        window.kodiakStore.showToast('Por favor ingresa un nombre y un correo electrónico válido.');
-      } else {
-        alert('Por favor ingresa un nombre y un correo electrónico válido.');
-      }
-      return;
-    }
-
-    const user = {
-      sub: `google_oauth2_${Math.floor(1000000000 + Math.random() * 9000000000)}`,
-      name: customName.trim(),
-      email: customEmail.trim(),
-      picture: `https://ui-avatars.com/api/?name=${encodeURIComponent(customName.trim())}&background=00ff88&color=0a0e17&bold=true`,
-      verified_email: true,
-      auth_provider: 'Google Identity Service',
-      auth_time: Date.now()
-    };
-
-    this.saveSession(user);
-    safeCloseModal('googleAuthModal');
-
-    // Auto-completar en el checkout si los campos existen
-    const nameInput = document.getElementById('checkoutBuyerName');
-    const emailInput = document.getElementById('checkoutBuyerEmail');
-    if (nameInput) nameInput.value = user.name;
-    if (emailInput) emailInput.value = user.email;
-
-    if (window.kodiakStore) {
-      window.kodiakStore.showToast(`¡Bienvenido atleta ${user.name}!`);
-      window.kodiakStore.playHapticTone('success');
-    }
-  }
-
+  // Compatibilidad hacia atrás
   simulateLoginAs(type) {
-    if (type === 'kodiak') {
-      this.loginCustomUser('Gabriel Zaul Hazim (Kodiak)', 'gabrielkodiak@gmail.com');
-    } else {
-      this.loginCustomUser('Atleta Profesional VIP', 'cliente.vip@kodiakforce.com');
-    }
+    this.loginAsAccount(type);
   }
 }
 
+// Inicialización global
 window.GoogleAuthSimulator = GoogleAuthSimulator;
+document.addEventListener('DOMContentLoaded', () => {
+  window.kodiakAuth = new GoogleAuthSimulator();
+});

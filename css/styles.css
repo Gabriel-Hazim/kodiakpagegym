@@ -1125,3 +1125,65 @@ a {
   box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
   transform: translateY(-2px);
 }
+
+/* =========================================================================
+   ESTILOS: GOOGLE IDENTITY / SELECTOR DE CUENTAS ELEGANTE
+   ========================================================================= */
+.google-account-chooser {
+  border-radius: 16px;
+  background: #111622;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px;
+}
+
+.google-account-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  text-align: left;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.google-account-item:hover {
+  background: rgba(0, 245, 141, 0.08);
+  border-color: rgba(0, 245, 141, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.google-avatar-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 245, 141, 0.5);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.google-account-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f8fafc;
+  line-height: 1.2;
+}
+
+.google-account-email {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  line-height: 1.2;
+}
+
+.google-client-config-card {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: left;
+}

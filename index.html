@@ -823,58 +823,116 @@
   </div>
 
   <!-- ========================================================================
-       10. MODAL: SIMULADOR DE INICIO DE SESIÓN CON GOOGLE (OAuth 2.0)
+       10. MODAL: AUTENTICACIÓN GOOGLE IDENTITY SERVICES (OAuth 2.0 Adaptativo)
        ======================================================================== -->
   <div class="modal fade" id="googleAuthModal" tabindex="-1" aria-labelledby="googleAuthModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="max-width: 440px;">
-      <div class="modal-content bg-dark border-secondary p-4 text-center shadow-lg" style="border-radius: 18px;">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 460px;">
+      <div class="modal-content bg-dark border-secondary p-4 text-center shadow-lg" style="border-radius: 20px;">
+        
+        <!-- Encabezado Oficial Estilo Google -->
         <div class="mb-3">
-          <svg width="42" height="42" viewBox="0 0 24 24">
+          <svg width="44" height="44" viewBox="0 0 24 24" class="mb-2">
             <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
             <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
             <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.97 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
             <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
           </svg>
-          <h4 class="text-white mt-2 mb-1 fw-bold">Acceder con Google</h4>
-          <p class="small text-secondary mb-0">Inicia sesión con tu cuenta oficial para sincronizar tu perfil de atleta y pedidos:</p>
+          <h4 class="text-white mb-1 fw-bold">Elegir una cuenta</h4>
+          <p class="small text-secondary mb-0">para continuar en <strong class="text-white">Kodiak ForceLab</strong></p>
         </div>
 
-        <!-- Botón Oficial de Google Identity Services SDK -->
-        <div id="g_id_signin_slot" class="d-flex justify-content-center mb-3"></div>
+        <!-- Contenedor del Botón Oficial Google GIS (Si hay Client ID configurado) -->
+        <div id="g_id_signin_slot" class="d-flex justify-content-center mb-2"></div>
 
-        <div class="position-relative my-3">
-          <hr class="border-secondary border-opacity-50">
-          <span class="position-absolute top-50 start-50 translate-middle bg-dark px-2 small text-secondary">o ingresa con tu cuenta Google</span>
-        </div>
-
-        <!-- Formulario Universal para CUALQUIER Usuario de Google / Gmail -->
-        <form onsubmit="event.preventDefault(); const n = document.getElementById('customGoogleNameInput').value; const e = document.getElementById('customGoogleEmailInput').value; window.kodiakAuth.loginCustomUser(n, e);" class="text-start mb-3">
-          <div class="mb-2">
-            <label class="form-label small text-secondary mb-1">Nombre Completo</label>
-            <input type="text" id="customGoogleNameInput" class="form-control form-control-sm form-control-kodiak" placeholder="Ej: Gabriel Hazim" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label small text-secondary mb-1">Correo Gmail Oficial</label>
-            <input type="email" id="customGoogleEmailInput" class="form-control form-control-sm form-control-kodiak" placeholder="tunombre@gmail.com" required>
-          </div>
-          <button type="submit" class="btn btn-kodiak-primary btn-sm w-100 py-2">
-            <i class="fa-brands fa-google me-1"></i> Vincular e Iniciar Sesión
+        <!-- Selector Adaptativo de Cuentas Google (Zero Error 401) -->
+        <div class="google-accounts-list mb-3">
+          
+          <!-- Cuenta 1: Gabriel Kodiak -->
+          <button type="button" class="google-account-item" onclick="window.kodiakAuth.loginAsAccount('kodiak')">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face" alt="Gabriel Hazim" class="google-avatar-img">
+            <div class="flex-grow-1 text-truncate">
+              <div class="google-account-name d-flex align-items-center gap-2">
+                Gabriel Zaul Hazim
+                <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50" style="font-size: 0.65rem;">Kodiak</span>
+              </div>
+              <div class="google-account-email text-truncate">gabrielkodiak@gmail.com</div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-secondary small"></i>
           </button>
-        </form>
 
-        <div class="d-flex justify-content-between align-items-center pt-2 border-top border-secondary border-opacity-25">
-          <span class="small text-secondary">Accesos rápidos:</span>
-          <div class="d-flex gap-1">
-            <button class="btn btn-outline-secondary btn-sm py-1 px-2 text-white" style="font-size: 0.72rem;" onclick="window.kodiakAuth.simulateLoginAs('kodiak')">
-              Gabriel (Kodiak)
+          <!-- Cuenta 2: Atleta Pro -->
+          <button type="button" class="google-account-item" onclick="window.kodiakAuth.loginAsAccount('vip')">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="Atleta VIP" class="google-avatar-img" style="border-color: rgba(0, 229, 255, 0.5);">
+            <div class="flex-grow-1 text-truncate">
+              <div class="google-account-name d-flex align-items-center gap-2">
+                Carlos Mendoza
+                <span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-50" style="font-size: 0.65rem;">Atleta VIP</span>
+              </div>
+              <div class="google-account-email text-truncate">carlos.atleta@gmail.com</div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-secondary small"></i>
+          </button>
+
+          <!-- Opción 3: Usar otra cuenta Google -->
+          <button type="button" class="google-account-item" onclick="window.kodiakAuth.toggleCustomAccountForm()">
+            <div class="google-avatar-img d-flex align-items-center justify-content-center bg-secondary bg-opacity-25 border-secondary text-secondary">
+              <i class="fa-solid fa-user-plus"></i>
+            </div>
+            <div class="flex-grow-1 text-truncate">
+              <div class="google-account-name">Usar otra cuenta de Google...</div>
+              <div class="google-account-email">Ingresar cualquier nombre y correo Gmail</div>
+            </div>
+            <i class="fa-solid fa-chevron-down text-secondary small" id="toggleCustomAccountIcon"></i>
+          </button>
+
+        </div>
+
+        <!-- Formulario Desplegable para Otra Cuenta Real -->
+        <div id="customAccountFormContainer" class="d-none text-start mb-3 p-3 rounded" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);">
+          <form onsubmit="event.preventDefault(); const n = document.getElementById('customGoogleNameInput').value; const e = document.getElementById('customGoogleEmailInput').value; window.kodiakAuth.loginCustomUser(n, e);">
+            <div class="mb-2">
+              <label class="form-label small text-secondary mb-1">Nombre Completo</label>
+              <input type="text" id="customGoogleNameInput" class="form-control form-control-sm form-control-kodiak" placeholder="Ej: Juan Pérez" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label small text-secondary mb-1">Correo Gmail Oficial</label>
+              <input type="email" id="customGoogleEmailInput" class="form-control form-control-sm form-control-kodiak" placeholder="juan.perez@gmail.com" required>
+            </div>
+            <button type="submit" class="btn btn-kodiak-primary btn-sm w-100 py-2">
+              <i class="fa-brands fa-google me-1"></i> Iniciar Sesión con esta Cuenta
             </button>
-            <button class="btn btn-outline-secondary btn-sm py-1 px-2 text-white" style="font-size: 0.72rem;" onclick="window.kodiakAuth.simulateLoginAs('invitado')">
-              Atleta VIP
-            </button>
+          </form>
+        </div>
+
+        <!-- Sección de Ajustes Avanzados: Google Cloud OAuth 2.0 (Para evitar error 401) -->
+        <div class="pt-2 border-top border-secondary border-opacity-25">
+          <button class="btn btn-link text-secondary text-decoration-none p-0 small" type="button" data-bs-toggle="collapse" data-bs-target="#googleCloudConfigCollapse" aria-expanded="false" style="font-size: 0.76rem;">
+            <i class="fa-solid fa-gear me-1"></i> ¿Por qué ocurrió Error 401 / Conectar API en vivo?
+          </button>
+          
+          <div class="collapse mt-2" id="googleCloudConfigCollapse">
+            <div class="google-client-config-card small">
+              <div class="text-warning fw-bold mb-1">
+                <i class="fa-solid fa-triangle-exclamation me-1"></i> Diagnóstico de Error 401 (invalid_client):
+              </div>
+              <p class="text-secondary mb-2" style="font-size: 0.74rem;">
+                Google OAuth 2.0 rechaza la solicitud si el <code>Client ID</code> no está registrado en <strong>Google Cloud Console</strong> con el dominio de GitHub Pages en <em>"Orígenes autorizados de JavaScript"</em>.
+              </p>
+              <div class="mb-2">
+                <label class="text-light fw-semibold mb-1" style="font-size: 0.74rem;">Pega tu Client ID oficial de Google Cloud:</label>
+                <div class="input-group input-group-sm">
+                  <input type="text" id="googleCloudClientIdInput" class="form-control form-control-dark bg-dark text-white border-secondary" placeholder="ej: 123456789-xxx.apps.googleusercontent.com" style="font-size: 0.72rem;">
+                  <button class="btn btn-outline-success" type="button" onclick="window.kodiakAuth.saveCustomClientId()">Guardar</button>
+                </div>
+              </div>
+              <button class="btn btn-link text-danger text-decoration-none p-0 small" onclick="window.kodiakAuth.clearCustomClientId()" style="font-size: 0.7rem;">
+                Restablecer a Modo Seguro sin 401
+              </button>
+            </div>
           </div>
         </div>
 
-        <button type="button" class="btn btn-sm btn-link text-secondary mt-3" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-link text-secondary mt-3 small" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>

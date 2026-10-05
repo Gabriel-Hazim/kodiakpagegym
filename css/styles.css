@@ -6,28 +6,29 @@
    ========================================================================== */
 
 :root {
-  /* Paleta de Colores Kodiak High-Performance */
-  --kodiak-bg-main: #0a0e17;
-  --kodiak-bg-surface: #0f172a;
-  --kodiak-bg-card: #141e30;
-  --kodiak-bg-card-hover: #1c2b45;
+  /* Paleta de Colores Kodiak High-Performance (Rogue / Nike Pro / SBD Elite) */
+  --kodiak-bg-main: #080a0f;
+  --kodiak-bg-surface: #0d111a;
+  --kodiak-bg-card: #121824;
+  --kodiak-bg-card-hover: #192333;
   --kodiak-border: rgba(255, 255, 255, 0.08);
-  --kodiak-border-glow: rgba(0, 255, 136, 0.35);
+  --kodiak-border-glow: rgba(0, 245, 141, 0.4);
 
   /* Acentos de Energía y Biomecánica */
-  --kodiak-neon-lime: #00ff88;
-  --kodiak-neon-lime-rgb: 0, 255, 136;
+  --kodiak-neon-lime: #00f58d;
+  --kodiak-neon-lime-rgb: 0, 245, 141;
   --kodiak-cyber-cyan: #00e5ff;
   --kodiak-cyber-cyan-rgb: 0, 229, 255;
-  --kodiak-electric-orange: #ff7700;
-  --kodiak-crimson-red: #ff0055;
+  --kodiak-electric-orange: #ff8800;
+  --kodiak-crimson-red: #ff334b;
+  --kodiak-gold: #fbbf24;
 
   /* Tipografía y Texturas */
   --font-heading: 'Rajdhani', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --kodiak-glass: rgba(15, 23, 42, 0.85);
-  --kodiak-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-  --kodiak-shadow-neon: 0 0 25px rgba(0, 255, 136, 0.25);
+  --kodiak-glass: rgba(13, 17, 26, 0.88);
+  --kodiak-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  --kodiak-shadow-neon: 0 0 25px rgba(0, 245, 141, 0.28);
 }
 
 /* Reset y Base */
@@ -173,15 +174,16 @@ a {
 }
 
 /* ==========================================================================
-   HERO BANNER DINÁMICO
+   HERO BANNER DINÁMICO CON FOTOGRAFÍA ATLÉTICA REAL
    ========================================================================== */
 .hero-section {
   position: relative;
-  padding: 80px 0 60px;
-  background: radial-gradient(circle at 80% 30%, rgba(0, 229, 255, 0.1) 0%, transparent 60%),
-              radial-gradient(circle at 20% 80%, rgba(0, 255, 136, 0.08) 0%, transparent 50%),
-              var(--kodiak-bg-main);
+  padding: 85px 0 70px;
+  background: 
+    linear-gradient(135deg, rgba(8, 10, 15, 0.94) 0%, rgba(13, 17, 26, 0.86) 50%, rgba(8, 10, 15, 0.96) 100%),
+    url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
   border-bottom: 1px solid var(--kodiak-border);
+  overflow: hidden;
 }
 
 .hero-title {
@@ -199,7 +201,7 @@ a {
 
 .highlight-lime {
   color: var(--kodiak-neon-lime);
-  text-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+  text-shadow: 0 0 20px rgba(0, 245, 141, 0.4);
 }
 
 .highlight-cyan {
@@ -222,34 +224,286 @@ a {
   font-family: var(--font-heading);
 }
 
+/* Ticker oficial BCV */
+.bcv-ticker-badge {
+  background: rgba(0, 245, 141, 0.08);
+  border: 1px solid rgba(0, 245, 141, 0.25);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: #e2e8f0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
+}
+
+/* Showcase de Disciplinas y Atletas en Vivo */
+.discipline-card {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  height: 220px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  background: #0d111a;
+}
+
+.discipline-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--kodiak-neon-lime);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 245, 141, 0.25);
+}
+
+.discipline-card-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease, filter 0.5s ease;
+  filter: brightness(0.6) contrast(1.15);
+}
+
+.discipline-card:hover .discipline-card-bg {
+  transform: scale(1.08);
+  filter: brightness(0.75) contrast(1.25);
+}
+
+.discipline-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 10, 15, 0.1) 0%, rgba(8, 10, 15, 0.92) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 18px;
+  z-index: 2;
+}
+
+.discipline-card-tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.discipline-card-title {
+  font-size: 1.22rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+
+/* ==========================================================================
+   VISOR 3D INTEGRADO EN EL HERO BANNER (REACTIVO AL SCROLL)
+   ========================================================================== */
+.hero-3d-box {
+  position: relative;
+  width: 100%;
+  min-height: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, rgba(0, 229, 255, 0.1) 0%, rgba(0, 255, 136, 0.05) 45%, transparent 70%);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#hero-threejs-viewport {
+  width: 100%;
+  height: 440px;
+  display: block;
+  cursor: grab;
+}
+
+#hero-threejs-viewport:active {
+  cursor: grabbing;
+}
+
+.hero-3d-model-selector {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+  background: rgba(10, 14, 23, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 4px;
+  border-radius: 20px;
+  border: 1px solid var(--kodiak-border);
+}
+
+.model-pill-btn {
+  background: transparent;
+  color: #94a3b8;
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 14px;
+  transition: all 0.2s ease;
+}
+
+.model-pill-btn:hover, .model-pill-btn.active {
+  background: var(--kodiak-neon-lime);
+  color: #0a0e17;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+}
+
+.hero-3d-hint {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  background: rgba(10, 14, 23, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--kodiak-border);
+  color: #cbd5e1;
+  font-size: 0.72rem;
+  padding: 4px 12px;
+  border-radius: 12px;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 5;
+}
+
+/* Quick Buy Card flotante al lateral del visor 3D (No obstruye el modelo central) */
+.hero-3d-buy-card {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 235px;
+  max-width: calc(100% - 32px);
+  background: rgba(10, 14, 23, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(0, 255, 136, 0.35);
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8), 0 0 16px rgba(0, 255, 136, 0.15);
+  z-index: 10;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.hero-3d-buy-card:hover {
+  border-color: var(--kodiak-neon-lime);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 255, 136, 0.3);
+}
+
+/* Selector de Tallas para Ropa y Accesorios */
+.product-size-box {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.size-pill-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.size-pill-btn:hover {
+  background: rgba(0, 229, 255, 0.15);
+  border-color: rgba(0, 229, 255, 0.4);
+  color: #ffffff;
+}
+
+.size-pill-btn.active {
+  background: var(--kodiak-cyber-cyan);
+  border-color: var(--kodiak-cyber-cyan);
+  color: #080a0f;
+  font-weight: 800;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+}
+
+/* Badge de Estrellas Interactivo */
+.product-rating-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 3px 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.product-rating-badge:hover {
+  background: rgba(251, 191, 36, 0.15);
+  border-color: rgba(251, 191, 36, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Chips Reactivos de Filtros Activos */
+.active-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 255, 136, 0.12);
+  border: 1px solid rgba(0, 255, 136, 0.35);
+  color: var(--kodiak-neon-lime);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.active-filter-chip:hover {
+  background: rgba(255, 51, 75, 0.2);
+  border-color: rgba(255, 51, 75, 0.5);
+  color: #ff334b;
+  transform: translateY(-1px);
+}
+
 /* ==========================================================================
    TARJETAS DE PRODUCTOS (<article>)
    ========================================================================== */
+/* ==========================================================================
+   PRODUCT CARDS & CATÁLOGO
+   ========================================================================== */
 .product-card {
-  background: var(--kodiak-bg-card);
-  border: 1px solid var(--kodiak-border);
-  border-radius: 14px;
+  background: linear-gradient(165deg, #111827 0%, #0b0f19 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
   overflow: hidden;
   transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.3s ease, border-color 0.3s ease;
   display: flex;
   flex-direction: column;
   height: 100%;
   position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .product-card:hover {
   transform: translateY(-8px);
   border-color: var(--kodiak-neon-lime);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 136, 0.2);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65), 0 0 25px rgba(0, 255, 136, 0.25);
 }
 
 .product-img-box {
   position: relative;
   width: 100%;
   padding-top: 85%;
-  background: radial-gradient(circle, #1e293b 0%, #0f172a 100%);
+  background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
   overflow: hidden;
   cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .product-img-box img {
@@ -259,66 +513,240 @@ a {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 20px;
-  transition: transform 0.4s ease;
+  padding: 24px;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
 }
 
 .product-card:hover .product-img-box img {
-  transform: scale(1.08);
+  transform: scale(1.12);
 }
 
 .product-badge {
   position: absolute;
   top: 12px;
   left: 12px;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(10, 14, 23, 0.85);
+  backdrop-filter: blur(6px);
   border: 1px solid var(--kodiak-neon-lime);
   color: var(--kodiak-neon-lime);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 800;
   padding: 4px 10px;
   border-radius: 20px;
   letter-spacing: 1px;
+  z-index: 2;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 .product-category-tag {
-  color: var(--kodiak-cyber-cyan);
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Category Badge Color Coding */
+.tag-armwrestling {
+  color: #ff5263 !important;
+  background: rgba(255, 82, 99, 0.12);
+  border: 1px solid rgba(255, 82, 99, 0.3);
+}
+.tag-streetlifting {
+  color: #fbbf24 !important;
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+.tag-fuerza {
+  color: #00f0ff !important;
+  background: rgba(0, 240, 255, 0.12);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+}
+.tag-suplementos {
+  color: #10b981 !important;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.tag-accesorios {
+  color: #c084fc !important;
+  background: rgba(192, 132, 252, 0.12);
+  border: 1px solid rgba(192, 132, 252, 0.3);
+}
+.tag-ropa {
+  color: #38bdf8 !important;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
 }
 
 .product-title {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: #ffffff;
-  margin-bottom: 8px;
-  line-height: 1.3;
+  margin-bottom: 6px;
+  line-height: 1.35;
+  transition: color 0.2s ease;
+}
+
+.product-card:hover .product-title {
+  color: #00ff88;
 }
 
 .product-price {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 900;
   color: var(--kodiak-neon-lime);
   font-family: var(--font-heading);
+  letter-spacing: 0.5px;
 }
 
 .product-price-bs {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: #94a3b8;
+  font-weight: 600;
 }
 
 .spec-chip {
   display: inline-block;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--kodiak-border);
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.73rem;
   color: #cbd5e1;
-  margin-right: 6px;
-  margin-bottom: 6px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+/* Indicador de Stock con Pulso */
+.stock-pulse-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--kodiak-neon-lime);
+  box-shadow: 0 0 8px var(--kodiak-neon-lime);
+  animation: pulse-green 1.8s infinite;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+@keyframes pulse-green {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+  70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(0, 255, 136, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
+}
+
+.stock-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+.stock-pill-ok {
+  background: rgba(0, 255, 136, 0.12);
+  color: #00ff88;
+  border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.stock-pill-low {
+  background: rgba(255, 70, 85, 0.12);
+  color: #ff4655;
+  border: 1px solid rgba(255, 70, 85, 0.3);
+}
+
+.stock-pill .stock-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.stock-pill-ok .stock-dot {
+  background: #00ff88;
+  box-shadow: 0 0 6px #00ff88;
+}
+
+.stock-pill-low .stock-dot {
+  background: #ff4655;
+  box-shadow: 0 0 6px #ff4655;
+}
+
+/* ==========================================================================
+   ESTILOS DEL ASIDE DE FILTROS LATERALES
+   ========================================================================== */
+.sidebar-cat-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.sidebar-cat-btn:hover {
+  background: rgba(0, 255, 136, 0.08);
+  border-color: rgba(0, 255, 136, 0.3);
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+.sidebar-cat-btn.active {
+  background: rgba(0, 255, 136, 0.15);
+  border-color: var(--kodiak-neon-lime);
+  color: var(--kodiak-neon-lime);
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.2);
+}
+
+.sidebar-cat-btn .badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+}
+
+.sidebar-cat-btn.active .badge {
+  background: var(--kodiak-neon-lime);
+  color: #0a0e17;
+}
+
+.rating-filter-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rating-filter-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.rating-filter-btn.active {
+  background: rgba(250, 204, 21, 0.18);
+  border-color: #facc15;
+  color: #facc15;
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.25);
 }
 
 /* ==========================================================================

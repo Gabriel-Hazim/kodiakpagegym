@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <defs>
+    <radialGradient id="shoesBg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#080a0f"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="600" fill="url(#shoesBg)"/>
+  
+  <!-- Zero-Drop Deadlift Barefoot Lifting Shoe -->
+  <g transform="translate(300, 310)">
+    <!-- Flat 3mm Rubber Sole Base -->
+    <path d="M-180,80 L180,80 L180,95 L-180,95 Z" fill="#00f58d" stroke="#ffffff" stroke-width="2"/>
+    <path d="M-175,95 L175,95" stroke="#0a0e17" stroke-width="4" stroke-dasharray="8 6"/>
+    
+    <!-- Shoe Upper Mesh (Ballistic Black) -->
+    <path d="M-175,80 C-185,20 -150,-10 -90,0 L0,-20 L90,-70 L140,-60 L175,10 L180,80 Z" fill="#0f172a" stroke="#334155" stroke-width="4"/>
+    
+    <!-- Heel Counter Support Cage -->
+    <path d="M-175,80 C-180,20 -150,-5 -120,-10 L-110,80 Z" fill="#1e293b" stroke="#00e5ff" stroke-width="3"/>
+    
+    <!-- Dual Metatarsal Lockdown Straps -->
+    <rect x="-40" y="-30" width="30" height="90" rx="4" transform="rotate(15)" fill="#1e293b" stroke="#00f58d" stroke-width="3"/>
+    <rect x="40" y="-45" width="30" height="90" rx="4" transform="rotate(15)" fill="#1e293b" stroke="#00f58d" stroke-width="3"/>
+    <text x="35" y="15" fill="#00f58d" font-family="'Rajdhani', sans-serif" font-weight="900" font-size="10" transform="rotate(15)">LOCKDOWN</text>
+    
+    <!-- Wide Toe Box Reinforcement -->
+    <path d="M120,30 C150,20 175,40 180,80 L120,80 Z" fill="#1e293b" stroke="#00f58d" stroke-width="2"/>
+    
+    <!-- High-Grip Traction Hexagon Texture -->
+    <circle cx="-80" cy="50" r="5" fill="#334155"/>
+    <circle cx="-50" cy="50" r="5" fill="#334155"/>
+    <circle cx="80" cy="50" r="5" fill="#334155"/>
+  </g>
+  
+  <text x="30" y="565" fill="#00f58d" font-family="monospace" font-size="13">BAREFOOT LIFTING SHOES // ZERO-DROP 3MM SOLE // WIDE TOE BOX // DEADLIFT</text>
+  <circle cx="530" cy="70" r="32" fill="rgba(0, 245, 141, 0.15)" stroke="#00f58d" stroke-width="2"/>
+  <text x="530" y="75" fill="#00f58d" font-family="'Rajdhani', sans-serif" font-weight="bold" font-size="14" text-anchor="middle">ZERO</text>
+</svg>

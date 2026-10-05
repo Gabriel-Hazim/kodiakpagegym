@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <defs>
+    <radialGradient id="thermoBg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#080a0f"/>
+    </radialGradient>
+    <linearGradient id="steelFlask" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="30%" stop-color="#0f172a"/>
+      <stop offset="70%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#090d16"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="600" fill="url(#thermoBg)"/>
+  
+  <!-- Hydro Steel Cooler 1.5L -->
+  <g transform="translate(300, 310)">
+    <!-- Main Insulated Cylinder Body -->
+    <rect x="-75" y="-130" width="150" height="260" rx="20" fill="url(#steelFlask)" stroke="#00e5ff" stroke-width="4"/>
+    
+    <!-- Silicone Non-Slip Bumper Boot at Bottom -->
+    <rect x="-75" y="80" width="150" height="50" rx="14" fill="#00f58d" opacity="0.85"/>
+    <text x="0" y="112" fill="#080a0f" font-family="'Rajdhani', sans-serif" font-weight="900" font-size="16" text-anchor="middle" letter-spacing="2">SHOCKPROOF BOOT</text>
+    
+    <!-- Steel Flask Neck and Spout Collar -->
+    <rect x="-55" y="-165" width="110" height="35" rx="6" fill="#1e293b" stroke="#ffffff" stroke-width="2"/>
+    <rect x="-35" y="-195" width="70" height="30" rx="4" fill="#00f58d"/>
+    
+    <!-- Heavy Duty Ergonomic Carry Loop Handle -->
+    <path d="M35,-180 C90,-180 90,-120 35,-120" fill="none" stroke="#00e5ff" stroke-width="8" stroke-linecap="round"/>
+    
+    <!-- Laser Etched Volume Gauge and Branding -->
+    <line x1="-50" y1="-80" x2="-20" y2="-80" stroke="#64748b" stroke-width="2"/>
+    <line x1="-50" y1="-30" x2="-20" y2="-30" stroke="#64748b" stroke-width="2"/>
+    <line x1="-50" y1="20" x2="-20" y2="20" stroke="#00e5ff" stroke-width="3"/>
+    
+    <text x="0" y="-35" fill="#ffffff" font-family="'Rajdhani', sans-serif" font-weight="900" font-size="28" text-anchor="middle" letter-spacing="4">1.5L</text>
+    <text x="0" y="-10" fill="#00e5ff" font-family="'Rajdhani', sans-serif" font-weight="700" font-size="14" text-anchor="middle" letter-spacing="3">HYDRO INSULATED</text>
+    <text x="0" y="10" fill="#94a3b8" font-family="monospace" font-size="10" text-anchor="middle">24H COLD // 18/8 STEEL</text>
+  </g>
+  
+  <text x="30" y="565" fill="#00e5ff" font-family="monospace" font-size="13">KODIAK HYDRO STEEL COOLER // 1500ML // TRIPLE WALL VACUUM // BPA FREE</text>
+  <circle cx="530" cy="70" r="32" fill="rgba(0, 229, 255, 0.15)" stroke="#00e5ff" stroke-width="2"/>
+  <text x="530" y="75" fill="#00e5ff" font-family="'Rajdhani', sans-serif" font-weight="bold" font-size="14" text-anchor="middle">1.5L</text>
+</svg>

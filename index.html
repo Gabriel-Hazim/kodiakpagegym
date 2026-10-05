@@ -18,6 +18,9 @@
   <!-- FontAwesome 6.5.2 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+  <!-- Google Identity Services (GIS) Official Client SDK -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -35,6 +38,13 @@
           <span class="brand-badge"><i class="fa-solid fa-bolt"></i> KODIAK</span>
           <span class="brand-text d-none d-sm-inline">FORCELAB</span>
         </a>
+
+        <!-- Ticker de Tasa Oficial BCV en Vivo -->
+        <div id="bcvTickerSlot" class="d-none d-lg-flex align-items-center bcv-ticker-badge py-1 px-3">
+          <span class="stock-pulse-dot"></span>
+          <span>BCV Oficial: <strong>Bs. 871,37</strong></span>
+          <span class="badge bg-success bg-opacity-25 text-success ms-1" style="font-size: 0.65rem;">EN VIVO</span>
+        </div>
 
         <!-- Buscador Reactivo en Tiempo Real -->
         <div class="search-container d-none d-md-block flex-grow-1 mx-3">
@@ -81,12 +91,13 @@
   <nav class="category-nav-bar" aria-label="Navegación de Categorías">
     <div class="container-fluid px-lg-5 overflow-auto">
       <div class="d-flex gap-2 py-1">
-        <a href="#" class="cat-nav-link active" data-cat="all"><i class="fa-solid fa-layer-group me-1"></i> Todos</a>
-        <a href="#" class="cat-nav-link" data-cat="armwrestling"><i class="fa-solid fa-hand-fist me-1"></i> Armwrestling & Agarre</a>
-        <a href="#" class="cat-nav-link" data-cat="fuerza"><i class="fa-solid fa-dumbbell me-1"></i> Fuerza & Powerlifting</a>
-        <a href="#" class="cat-nav-link" data-cat="suplementos"><i class="fa-solid fa-flask me-1"></i> Suplementación Biomecánica</a>
-        <a href="#" class="cat-nav-link" data-cat="accesorios"><i class="fa-solid fa-shield-halved me-1"></i> Soportes & Accesorios</a>
-        <a href="#laboratorio-3d" class="cat-nav-link text-info"><i class="fa-solid fa-cube me-1"></i> Laboratorio 3D</a>
+        <a href="#" class="cat-nav-link active" data-cat="all"><i class="fa-solid fa-layer-group me-1"></i> Todos los Equipos</a>
+        <a href="#" class="cat-nav-link" data-cat="armwrestling"><i class="fa-solid fa-hand-fist me-1"></i> Lucha de Brazos & Agarre</a>
+        <a href="#" class="cat-nav-link" data-cat="streetlifting"><i class="fa-solid fa-weight-hanging me-1"></i> Streetlifting & Lastre</a>
+        <a href="#" class="cat-nav-link" data-cat="fuerza"><i class="fa-solid fa-dumbbell me-1"></i> Fuerza & Mancuernas</a>
+        <a href="#" class="cat-nav-link" data-cat="suplementos"><i class="fa-solid fa-flask me-1"></i> Suplementos Deportivos</a>
+        <a href="#" class="cat-nav-link" data-cat="ropa"><i class="fa-solid fa-shirt me-1"></i> Indumentaria & Calzado</a>
+        <a href="#" class="cat-nav-link" data-cat="accesorios"><i class="fa-solid fa-shield-halved me-1"></i> Muñequeras & Soportes</a>
         <a href="#contacto" class="cat-nav-link text-warning"><i class="fa-solid fa-envelope me-1"></i> Contacto</a>
       </div>
     </div>
@@ -101,50 +112,134 @@
     <section id="hero" class="hero-section">
       <div class="container-fluid px-lg-5">
         <div class="row align-items-center gy-4">
-          <div class="col-lg-7">
+          <!-- Columna Izquierda: Información de Marca y Llamados a la Acción -->
+          <div class="col-lg-6">
             <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 px-3 py-2 rounded-pill fw-bold mb-3">
-              <i class="fa-solid fa-microchip me-1"></i> INGENIERÍA BIOMECÁNICA & RENDIMIENTO EXTREMO
+              <i class="fa-solid fa-microchip me-1"></i> BIOMECÁNICA, FUERZA & RESISTENCIA BALÍSTICA
             </span>
             <h1 class="hero-title text-white mb-3">
               EQUIPAMIENTO DE <span class="highlight-lime">FUERZA</span> Y <span class="highlight-cyan">PRECISIÓN</span>
             </h1>
             <p class="hero-subtitle mb-4">
-              Diseñado bajo estrictos principios de biomecánica articular, palancas óseas y resistencia balística. Cada equipo está calibrado para atletas de potencia, powerlifting y lucha de brazos profesional.
+              Diseñado para atletas de Streetlifting, Lucha de Brazos (Armwrestling), Powerlifting y Levantamiento de Élite. 
+              Inspecciona el modelo 3D en tiempo real a la derecha mientras navegas: gira armónicamente al hacer scroll.
             </p>
-            <div class="d-flex flex-wrap gap-3">
+            <div class="d-flex flex-wrap gap-3 mb-4">
               <a href="#catalogo" class="btn btn-kodiak-primary">
                 <i class="fa-solid fa-fire me-2"></i> Explorar Catálogo
               </a>
-              <a href="#laboratorio-3d" class="btn btn-kodiak-outline">
-                <i class="fa-solid fa-cube me-2"></i> Inspeccionar en 3D
-              </a>
+              <button class="btn btn-kodiak-outline" onclick="window.kodiakStore.hero3DViewer.resetCamera()">
+                <i class="fa-solid fa-rotate-left me-2"></i> Centrar Modelo 3D
+              </button>
+            </div>
+
+            <!-- Mini Métricas Rápidas -->
+            <div class="d-flex flex-wrap gap-3 pt-2">
+              <div class="d-flex align-items-center gap-2 small text-secondary">
+                <i class="fa-solid fa-check text-success"></i> <span>500 KG Tracción</span>
+              </div>
+              <div class="d-flex align-items-center gap-2 small text-secondary">
+                <i class="fa-solid fa-check text-success"></i> <span>300 KG Lastre</span>
+              </div>
+              <div class="d-flex align-items-center gap-2 small text-secondary">
+                <i class="fa-solid fa-check text-success"></i> <span>32 MM Abedul FIG</span>
+              </div>
+              <div class="d-flex align-items-center gap-2 small text-secondary">
+                <i class="fa-solid fa-check text-success"></i> <span>100% Creapure®</span>
+              </div>
             </div>
           </div>
-          <div class="col-lg-5">
-            <div class="row g-3">
-              <div class="col-6">
-                <div class="hero-stat-card">
-                  <div class="hero-stat-num">500 KG</div>
-                  <div class="small text-secondary fw-semibold">Tensión Balística</div>
-                </div>
+
+          <!-- Columna Derecha: Visor 3D WebGL Interactivo Unificado con el Scroll -->
+          <div class="col-lg-6">
+            <div class="hero-3d-box shadow-lg">
+              <!-- Selector de modelo 3D en vivo -->
+              <div class="hero-3d-model-selector">
+                <button class="model-pill-btn active" data-model="dumbbell" onclick="window.kodiakStore.set3DModel('dumbbell')">
+                  <i class="fa-solid fa-dumbbell me-1"></i> Mancuerna Hex
+                </button>
+                <button class="model-pill-btn" data-model="kettlebell" onclick="window.kodiakStore.set3DModel('kettlebell')">
+                  <i class="fa-solid fa-weight-hanging me-1"></i> Pesa Rusa
+                </button>
+                <button class="model-pill-btn" data-model="plate" onclick="window.kodiakStore.set3DModel('plate')">
+                  <i class="fa-solid fa-compact-disc me-1"></i> Disco 20KG
+                </button>
               </div>
-              <div class="col-6">
-                <div class="hero-stat-card">
-                  <div class="hero-stat-num">100%</div>
-                  <div class="small text-secondary fw-semibold">Pureza Certificada</div>
-                </div>
+
+              <!-- Canvas Three.js acelerado por WebGL -->
+              <div id="hero-threejs-viewport"></div>
+
+              <!-- Tarjeta Flotante de Compra Rápida del Modelo 3D -->
+              <div id="hero3DQuickBuy" class="hero-3d-buy-card"></div>
+
+              <!-- Pista de interacción -->
+              <div class="hero-3d-hint">
+                <i class="fa-solid fa-hand-pointer text-success me-1"></i> Arrastra para girar 360° | Reactivo al Scroll
               </div>
-              <div class="col-6">
-                <div class="hero-stat-card">
-                  <div class="hero-stat-num">10 MM</div>
-                  <div class="small text-secondary fw-semibold">Cuero Powerlifting</div>
-                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: SHOWCASE DE DISCIPLINAS Y ATLETAS REALES -->
+    <section id="disciplinas" class="py-4 border-bottom border-secondary border-opacity-25" style="background: rgba(10, 14, 23, 0.6);">
+      <div class="container-fluid px-lg-5">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+          <div>
+            <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 px-3 py-1 rounded-pill fw-bold mb-1" style="font-size: 0.72rem;">
+              <i class="fa-solid fa-trophy me-1"></i> MODALIDADES DEPORTIVAS OFICIALES
+            </span>
+            <h3 class="text-white mb-0 fw-bold">Disciplinas de Alto Impacto & Entrenamiento Real</h3>
+          </div>
+          <span class="text-secondary small d-none d-md-inline">Haz clic en una disciplina para filtrar el equipamiento oficial</span>
+        </div>
+
+        <div class="row g-3">
+          <!-- 1. Lucha de Brazos -->
+          <div class="col-6 col-lg-3">
+            <div class="discipline-card" onclick="window.kodiakStore.setCategory('armwrestling'); document.getElementById('catalogo').scrollIntoView({behavior: 'smooth'});">
+              <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=600&auto=format&fit=crop" alt="Lucha de Brazos" class="discipline-card-bg" loading="lazy">
+              <div class="discipline-card-overlay">
+                <span class="discipline-card-tag text-danger"><i class="fa-solid fa-hand-fist me-1"></i> Armwrestling</span>
+                <div class="discipline-card-title">Lucha de Brazos</div>
+                <span class="small text-white-50" style="font-size: 0.75rem;">Correas 500kg, Conos & Pronación</span>
               </div>
-              <div class="col-6">
-                <div class="hero-stat-card">
-                  <div class="hero-stat-num">3FN</div>
-                  <div class="small text-secondary fw-semibold">Arquitectura Limpia</div>
-                </div>
+            </div>
+          </div>
+
+          <!-- 2. Streetlifting -->
+          <div class="col-6 col-lg-3">
+            <div class="discipline-card" onclick="window.kodiakStore.setCategory('streetlifting'); document.getElementById('catalogo').scrollIntoView({behavior: 'smooth'});">
+              <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=600&auto=format&fit=crop" alt="Streetlifting" class="discipline-card-bg" loading="lazy">
+              <div class="discipline-card-overlay">
+                <span class="discipline-card-tag text-warning"><i class="fa-solid fa-weight-hanging me-1"></i> Streetlifting</span>
+                <div class="discipline-card-title">Lastre & Anillas</div>
+                <span class="small text-white-50" style="font-size: 0.75rem;">Cinturón 300kg & Abedul FIG 32mm</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Fuerza & Mancuernas -->
+          <div class="col-6 col-lg-3">
+            <div class="discipline-card" onclick="window.kodiakStore.setCategory('fuerza'); document.getElementById('catalogo').scrollIntoView({behavior: 'smooth'});">
+              <img src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=600&auto=format&fit=crop" alt="Fuerza y Mancuernas" class="discipline-card-bg" loading="lazy">
+              <div class="discipline-card-overlay">
+                <span class="discipline-card-tag text-info"><i class="fa-solid fa-dumbbell me-1"></i> Competición</span>
+                <div class="discipline-card-title">Fuerza & Pesas</div>
+                <span class="small text-white-50" style="font-size: 0.75rem;">Mancuernas Hex, Kettlebells & Palanca</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Suplementos Deportivos -->
+          <div class="col-6 col-lg-3">
+            <div class="discipline-card" onclick="window.kodiakStore.setCategory('suplementos'); document.getElementById('catalogo').scrollIntoView({behavior: 'smooth'});">
+              <img src="https://images.unsplash.com/photo-1579722821273-0f6c7d44362f?q=80&w=600&auto=format&fit=crop" alt="Suplementos Deportivos" class="discipline-card-bg" loading="lazy">
+              <div class="discipline-card-overlay">
+                <span class="discipline-card-tag text-success"><i class="fa-solid fa-flask me-1"></i> Bioquímica</span>
+                <div class="discipline-card-title">Suplementación</div>
+                <span class="small text-white-50" style="font-size: 0.75rem;">Creapure®, Hydro Whey CFM & CarnoSyn</span>
               </div>
             </div>
           </div>
@@ -159,33 +254,116 @@
 
           <!-- ASIDE SEMÁNTICO: FILTROS LATERALES (<aside>) -->
           <aside class="col-lg-3">
-            <div class="p-4 rounded-4 bg-dark bg-opacity-50 border border-secondary border-opacity-25 sticky-top" style="top: 80px;">
-              <h4 class="text-white mb-3 d-flex align-items-center gap-2">
-                <i class="fa-solid fa-sliders text-success"></i> Filtros de Selección
-              </h4>
+            <div class="p-4 rounded-4 bg-dark bg-opacity-75 border border-secondary border-opacity-25 sticky-top shadow-lg" style="top: 80px;">
+              <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom border-secondary border-opacity-25">
+                <h5 class="text-white mb-0 d-flex align-items-center gap-2">
+                  <i class="fa-solid fa-sliders text-success"></i> Filtros
+                </h5>
+                <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2 text-white" id="resetFiltersBtn" onclick="window.kodiakStore.resetAllFilters()" title="Restablecer todos los filtros" style="font-size: 0.75rem;">
+                  <i class="fa-solid fa-rotate-left me-1"></i> Limpiar
+                </button>
+              </div>
+
+              <!-- Categorías con Contador de Artículos -->
+              <div class="mb-4">
+                <label class="form-label small fw-bold text-secondary text-uppercase tracking-wider mb-2">Disciplinas & Categorías</label>
+                <div class="d-flex flex-column gap-1" id="sidebarCategoryList">
+                  <button type="button" class="sidebar-cat-btn active" data-cat="all">
+                    <span><i class="fa-solid fa-layer-group me-2"></i> Todos los Equipos</span>
+                    <span class="badge bg-secondary bg-opacity-50" id="catCount-all">20</span>
+                  </button>
+                  <button type="button" class="sidebar-cat-btn" data-cat="armwrestling">
+                    <span><i class="fa-solid fa-hand-fist me-2 text-danger"></i> Lucha de Brazos</span>
+                    <span class="badge bg-secondary bg-opacity-50" id="catCount-armwrestling">3</span>
+                  </button>
+                  <button type="button" class="sidebar-cat-btn" data-cat="streetlifting">
+                    <span><i class="fa-solid fa-weight-hanging me-2 text-warning"></i> Streetlifting & Lastre</span>
+                    <span class="badge bg-secondary bg-opacity-50" id="catCount-streetlifting">2</span>
+                  </button>
+                  <button type="button" class="sidebar-cat-btn" data-cat="fuerza">
+                    <span><i class="fa-solid fa-dumbbell me-2 text-info"></i> Fuerza & Mancuernas</span>
+                    <span class="badge bg-secondary bg-opacity-50" id="catCount-fuerza">5</span>
+                  </button>
+                  <button type="button" class="sidebar-cat-btn" data-cat="suplementos">
+                    <span><i class="fa-solid fa-flask me-2 text-success"></i> Suplementación Pura</span>
+                    <span class="badge bg-secondary bg-opacity-50" id="catCount-suplementos">3</span>
+                  </button>
+                  <button type="button" class="sidebar-cat-btn" data-cat="ropa">
+                    <span><i class="fa-solid fa-shirt me-2 text-info"></i> Indumentaria & Calzado</span>
+                    <span class="badge bg-secondary bg-opacity-50" id="catCount-ropa">3</span>
+                  </button>
+                  <button type="button" class="sidebar-cat-btn" data-cat="accesorios">
+                    <span><i class="fa-solid fa-shield-halved me-2 text-primary"></i> Muñequeras & Grips</span>
+                    <span class="badge bg-secondary bg-opacity-50" id="catCount-accesorios">4</span>
+                  </button>
+                </div>
+              </div>
 
               <!-- Slider de Precio Máximo -->
               <div class="mb-4">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                  <label for="priceFilterRange" class="form-label small fw-bold text-secondary mb-0">Precio Máximo (USD)</label>
-                  <span id="priceFilterValue" class="badge bg-success bg-opacity-25 text-success fw-bold">$250</span>
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <label for="priceFilterRange" class="form-label small fw-bold text-secondary text-uppercase tracking-wider mb-0">Precio Máximo</label>
+                  <span id="priceFilterValue" class="badge bg-success bg-opacity-25 text-success fw-bold px-2 py-1">$250 USD</span>
+                </div>
+                <div class="d-flex justify-content-between small text-secondary mb-2" style="font-size: 0.75rem;">
+                  <span>Mín: $15</span>
+                  <span id="priceFilterValueBs" class="text-info">≈ Bs. 10.375,00</span>
                 </div>
                 <input type="range" class="form-range" id="priceFilterRange" min="15" max="250" step="5" value="250">
               </div>
 
+              <!-- Filtro de Calificación Mínima con Estrellas y Contadores -->
+              <div class="mb-4">
+                <label class="form-label small fw-bold text-secondary text-uppercase tracking-wider mb-2">Calificación Mínima</label>
+                <div class="d-flex flex-column gap-1" id="ratingFilterGroup">
+                  <button type="button" class="sidebar-cat-btn rating-filter-btn active" data-min-rating="0">
+                    <span><i class="fa-solid fa-layer-group me-2 text-secondary"></i> Todas las Estrellas</span>
+                    <span class="badge bg-secondary bg-opacity-50">20</span>
+                  </button>
+                  <button type="button" class="sidebar-cat-btn rating-filter-btn" data-min-rating="4.8">
+                    <span>
+                      <i class="fa-solid fa-star text-warning me-1"></i>
+                      <i class="fa-solid fa-star text-warning me-1"></i>
+                      <i class="fa-solid fa-star text-warning me-1"></i>
+                      <i class="fa-solid fa-star text-warning me-1"></i>
+                      <i class="fa-solid fa-star text-warning me-1"></i>
+                      <span class="fw-bold text-white small ms-1">4.8+ Élite</span>
+                    </span>
+                    <span class="badge bg-secondary bg-opacity-50">20</span>
+                  </button>
+                  <button type="button" class="sidebar-cat-btn rating-filter-btn" data-min-rating="5.0">
+                    <span>
+                      <i class="fa-solid fa-star text-warning me-1"></i>
+                      <i class="fa-solid fa-star text-warning me-1"></i>
+                      <i class="fa-solid fa-star text-warning me-1"></i>
+                      <i class="fa-solid fa-star text-warning me-1"></i>
+                      <i class="fa-solid fa-star text-warning me-1"></i>
+                      <span class="fw-bold text-warning small ms-1">5.0 Perfecta</span>
+                    </span>
+                    <span class="badge bg-secondary bg-opacity-50">8</span>
+                  </button>
+                </div>
+              </div>
+
               <!-- Ordenamiento -->
               <div class="mb-4">
-                <label for="sortSelect" class="form-label small fw-bold text-secondary">Ordenar Catálogo</label>
+                <label for="sortSelect" class="form-label small fw-bold text-secondary text-uppercase tracking-wider mb-2">Ordenar Catálogo</label>
                 <select id="sortSelect" class="form-select bg-dark text-white border-secondary">
                   <option value="default">Relevancia / Destacados</option>
                   <option value="price-asc">Precio: Menor a Mayor</option>
                   <option value="price-desc">Precio: Mayor a Menor</option>
                   <option value="rating-desc">Mejor Calificación</option>
+                  <option value="stock-desc">Mayor Disponibilidad</option>
                 </select>
               </div>
 
+              <!-- Contador de Resultados -->
+              <div class="p-2 rounded bg-black bg-opacity-40 border border-secondary border-opacity-25 text-center mb-3">
+                <span id="filterResultCount" class="small text-secondary fw-semibold">Mostrando 14 de 14 productos</span>
+              </div>
+
               <!-- Certificación y Garantía Oficial -->
-              <div class="p-3 rounded-3 bg-success bg-opacity-10 border border-success border-opacity-25 mt-4">
+              <div class="p-3 rounded-3 bg-success bg-opacity-10 border border-success border-opacity-25">
                 <h6 class="text-success fw-bold mb-1"><i class="fa-solid fa-shield-check me-1"></i> Certificación Kodiak Lab</h6>
                 <p class="small text-secondary mb-0">
                   Equipos sometidos a ensayos no destructivos de fatiga y calibrados bajo especificaciones técnicas IPF e ISO 9001.
@@ -196,62 +374,25 @@
 
           <!-- ARTÍCULOS DE PRODUCTOS (<article>) -->
           <div class="col-lg-9">
-            <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
               <div>
-                <h2 class="text-white mb-0">Catálogo de Equipamiento Oficial</h2>
-                <p class="text-secondary small mb-0">Haz clic en la imagen para explorar el aumento microscópico con zoom dinámico.</p>
+                <h2 class="text-white mb-0 fw-bold">Catálogo de Equipamiento Oficial</h2>
+                <p class="text-secondary small mb-0">Haz clic en cualquier producto para explorar la inspección microscópica con zoom dinámico.</p>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-dark border border-secondary text-secondary px-3 py-2">
+                  <i class="fa-solid fa-truck-fast text-success me-1"></i> Envíos MRW / Zoom / Tealca
+                </span>
               </div>
             </div>
+
+            <!-- Barra de Filtros Activos Reactiva -->
+            <div id="activeFiltersBar" class="d-flex flex-wrap align-items-center gap-2 mb-3 d-none"></div>
 
             <!-- Grilla Dinámica de Artículos -->
             <div id="productGrid" class="row"></div>
           </div>
 
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION: LABORATORIO 3D INTERACTIVO CON THREE.JS -->
-    <section id="laboratorio-3d" class="py-5 border-top border-secondary border-opacity-25">
-      <div class="container-fluid px-lg-5">
-        <div class="text-center mb-4">
-          <span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-50 px-3 py-2 rounded-pill fw-bold mb-2">
-            <i class="fa-solid fa-cube me-1"></i> RENDERIZADO WEBGL EN TIEMPO REAL
-          </span>
-          <h2 class="text-white">Laboratorio 3D: Inspección Geométrica</h2>
-          <p class="text-secondary mx-auto" style="max-width: 650px;">
-            Manipula el modelo 3D de la Mancuerna Hexagonal de Competición en órbita tridimensional. Usa el ratón o pantalla táctil para girar, acercar o cambiar el acabado metálico.
-          </p>
-        </div>
-
-        <div class="lab-3d-wrapper">
-          <!-- Canvas WebGL donde Three.js dibuja la escena -->
-          <div id="threejs-canvas-viewport"></div>
-
-          <!-- Controles Superpuestos -->
-          <div class="controls-overlay-3d">
-            <div class="d-flex align-items-center gap-2 flex-wrap">
-              <span class="small fw-bold text-secondary">Acabado Material:</span>
-              <button class="btn-3d-toggle active" onclick="window.kodiakStore.threeViewer.setMaterial('black'); this.parentElement.querySelectorAll('.btn-3d-toggle').forEach(b => b.classList.remove('active')); this.classList.add('active');">
-                Negro Táctico
-              </button>
-              <button class="btn-3d-toggle" onclick="window.kodiakStore.threeViewer.setMaterial('chrome'); this.parentElement.querySelectorAll('.btn-3d-toggle').forEach(b => b.classList.remove('active')); this.classList.add('active');">
-                Acero Cromado
-              </button>
-              <button class="btn-3d-toggle" onclick="window.kodiakStore.threeViewer.setMaterial('gold'); this.parentElement.querySelectorAll('.btn-3d-toggle').forEach(b => b.classList.remove('active')); this.classList.add('active');">
-                Titanio Dorado
-              </button>
-            </div>
-
-            <div class="d-flex align-items-center gap-2">
-              <button class="btn btn-sm btn-outline-light" onclick="const st = window.kodiakStore.threeViewer.toggleAutoRotate(); this.innerHTML = st ? '<i class=\'fa-solid fa-pause me-1\'></i> Pausar Giro' : '<i class=\'fa-solid fa-play me-1\'></i> Auto-Giro';">
-                <i class="fa-solid fa-pause me-1"></i> Pausar Giro
-              </button>
-              <button class="btn btn-sm btn-outline-info" onclick="window.kodiakStore.threeViewer.resetCamera()">
-                <i class="fa-solid fa-rotate-left me-1"></i> Centrar
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -685,37 +826,52 @@
        10. MODAL: SIMULADOR DE INICIO DE SESIÓN CON GOOGLE (OAuth 2.0)
        ======================================================================== -->
   <div class="modal fade" id="googleAuthModal" tabindex="-1" aria-labelledby="googleAuthModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
-      <div class="modal-content bg-dark border-secondary p-3 text-center">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 440px;">
+      <div class="modal-content bg-dark border-secondary p-4 text-center shadow-lg" style="border-radius: 18px;">
         <div class="mb-3">
-          <svg width="40" height="40" viewBox="0 0 24 24">
+          <svg width="42" height="42" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
             <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
             <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.97 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
             <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
           </svg>
-          <h5 class="text-white mt-2 mb-1">Acceder con Google</h5>
-          <p class="small text-secondary mb-0">Selecciona la cuenta para vincular tu perfil de atleta:</p>
+          <h4 class="text-white mt-2 mb-1 fw-bold">Acceder con Google</h4>
+          <p class="small text-secondary mb-0">Inicia sesión con tu cuenta oficial para sincronizar tu perfil de atleta y pedidos:</p>
         </div>
 
-        <div class="d-flex flex-column gap-2">
-          <!-- Cuenta 1: Gabriel Hazim -->
-          <button class="btn btn-outline-light text-start p-2 d-flex align-items-center gap-3 border-secondary" onclick="window.kodiakAuth.simulateLoginAs('kodiak')">
-            <div class="rounded-circle bg-success text-dark fw-bold d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">G</div>
-            <div class="overflow-hidden">
-              <div class="small fw-bold text-white text-truncate">Gabriel Zaul Hazim</div>
-              <div class="small text-secondary text-truncate" style="font-size: 0.75rem;">gabrielkodiak@gmail.com</div>
-            </div>
-          </button>
+        <!-- Botón Oficial de Google Identity Services SDK -->
+        <div id="g_id_signin_slot" class="d-flex justify-content-center mb-3"></div>
 
-          <!-- Cuenta 2: Atleta Profesional VIP -->
-          <button class="btn btn-outline-light text-start p-2 d-flex align-items-center gap-3 border-secondary" onclick="window.kodiakAuth.simulateLoginAs('invitado')">
-            <div class="rounded-circle bg-info text-dark fw-bold d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">V</div>
-            <div class="overflow-hidden">
-              <div class="small fw-bold text-white text-truncate">Atleta Profesional VIP</div>
-              <div class="small text-secondary text-truncate" style="font-size: 0.75rem;">cliente.vip@kodiakforce.com</div>
-            </div>
+        <div class="position-relative my-3">
+          <hr class="border-secondary border-opacity-50">
+          <span class="position-absolute top-50 start-50 translate-middle bg-dark px-2 small text-secondary">o ingresa con tu cuenta Google</span>
+        </div>
+
+        <!-- Formulario Universal para CUALQUIER Usuario de Google / Gmail -->
+        <form onsubmit="event.preventDefault(); const n = document.getElementById('customGoogleNameInput').value; const e = document.getElementById('customGoogleEmailInput').value; window.kodiakAuth.loginCustomUser(n, e);" class="text-start mb-3">
+          <div class="mb-2">
+            <label class="form-label small text-secondary mb-1">Nombre Completo</label>
+            <input type="text" id="customGoogleNameInput" class="form-control form-control-sm form-control-kodiak" placeholder="Ej: Gabriel Hazim" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label small text-secondary mb-1">Correo Gmail Oficial</label>
+            <input type="email" id="customGoogleEmailInput" class="form-control form-control-sm form-control-kodiak" placeholder="tunombre@gmail.com" required>
+          </div>
+          <button type="submit" class="btn btn-kodiak-primary btn-sm w-100 py-2">
+            <i class="fa-brands fa-google me-1"></i> Vincular e Iniciar Sesión
           </button>
+        </form>
+
+        <div class="d-flex justify-content-between align-items-center pt-2 border-top border-secondary border-opacity-25">
+          <span class="small text-secondary">Accesos rápidos:</span>
+          <div class="d-flex gap-1">
+            <button class="btn btn-outline-secondary btn-sm py-1 px-2 text-white" style="font-size: 0.72rem;" onclick="window.kodiakAuth.simulateLoginAs('kodiak')">
+              Gabriel (Kodiak)
+            </button>
+            <button class="btn btn-outline-secondary btn-sm py-1 px-2 text-white" style="font-size: 0.72rem;" onclick="window.kodiakAuth.simulateLoginAs('invitado')">
+              Atleta VIP
+            </button>
+          </div>
         </div>
 
         <button type="button" class="btn btn-sm btn-link text-secondary mt-3" data-bs-dismiss="modal">Cancelar</button>

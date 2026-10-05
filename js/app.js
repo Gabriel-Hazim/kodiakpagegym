@@ -75,7 +75,7 @@ const KODIAK_CATALOG = [
     rating: 5.0,
     reviews: 94,
     badge: 'BESTSELLER OFICIAL',
-    image: 'assets/images/strap_armwrestling.svg',
+    image: 'assets/images/strap_armwrestling.jpg',
     shortDesc: 'Correa oficial de competición con triple costura balística y hebilla inoxidable.',
     specs: [
       'Resistencia a tracción: 500 kg',
@@ -96,7 +96,7 @@ const KODIAK_CATALOG = [
     rating: 5.0,
     reviews: 68,
     badge: 'KODIAK LAB',
-    image: 'assets/images/pronator_handle.svg',
+    image: 'assets/images/pronator_handle.jpg',
     shortDesc: 'Mango cónico excéntrico para hipertrofia del pronador redondo y palancas de muñeca.',
     specs: [
       'Diámetro cónico: 60 mm a 45 mm',
@@ -117,7 +117,7 @@ const KODIAK_CATALOG = [
     rating: 4.9,
     reviews: 52,
     badge: 'AGARRE GRUESO',
-    image: 'assets/images/fat_gripz_cone.svg',
+    image: 'assets/images/fat_gripz_cone.jpg',
     shortDesc: 'Adaptador de agarre grueso para convertir cualquier barra o mancuerna estándar en eje de 60mm.',
     specs: [
       'Diámetro exterior: 60 mm (2.36")',
@@ -140,7 +140,7 @@ const KODIAK_CATALOG = [
     rating: 5.0,
     reviews: 81,
     badge: 'CARGA EXTREMA',
-    image: 'assets/images/dip_belt_streetlifting.svg',
+    image: 'assets/images/dip_belt_streetlifting.jpg',
     shortDesc: 'Cinturón ergonómico para fondos y dominadas con cadena de acero Grado 80 certificada.',
     specs: [
       'Capacidad de carga: 300 kg (660 lbs)',
@@ -161,7 +161,7 @@ const KODIAK_CATALOG = [
     rating: 4.9,
     reviews: 64,
     badge: 'ESTÁNDAR FIG',
-    image: 'assets/images/gymnastics_rings.svg',
+    image: 'assets/images/gymnastics_rings.jpg',
     shortDesc: 'Anillas de madera noble de abedul báltico pulidas a mano con correas numeradas de 4.5m.',
     specs: [
       'Diámetro de agarre: 32 mm oficial FIG',
@@ -184,7 +184,7 @@ const KODIAK_CATALOG = [
     rating: 4.9,
     reviews: 42,
     badge: 'SELECTOR RÁPIDO',
-    image: 'assets/images/dumbbell_force.svg',
+    image: 'assets/images/dumbbell_force.jpg',
     shortDesc: 'Sistema selector de dial rotatorio que reemplaza 15 pares de mancuernas convencionales.',
     specs: [
       'Rango: 2.5 kg a 24 kg por mancuerna',
@@ -205,7 +205,7 @@ const KODIAK_CATALOG = [
     rating: 5.0,
     reviews: 38,
     badge: 'PAR COMPLETO',
-    image: 'assets/images/dumbbell_hex_pair.svg',
+    image: 'assets/images/dumbbell_hex_pair.jpg',
     shortDesc: 'Par de mancuernas de fundición monobloque con revestimiento de uretano virgen de alta densidad.',
     specs: [
       'Peso del set: 20 kg + 20 kg (40 kg total)',
@@ -226,7 +226,7 @@ const KODIAK_CATALOG = [
     rating: 4.8,
     reviews: 31,
     badge: 'CALIBRADA GIREVOY',
-    image: 'assets/images/kettlebell_comp.svg',
+    image: 'assets/images/kettlebell_comp.jpg',
     shortDesc: 'Pesa rusa de acero monobloque con núcleo hueco y asa lisa pulida de 35mm para balance inercial.',
     specs: [
       'Peso exacto: 24 kg ± 0.1% de tolerancia',
@@ -247,7 +247,7 @@ const KODIAK_CATALOG = [
     rating: 5.0,
     reviews: 58,
     badge: 'TITANIUM LEVER',
-    image: 'assets/images/lever_belt.svg',
+    image: 'assets/images/lever_belt.jpg',
     shortDesc: 'Cuero genuino vacuno multicapa de 10mm con hebilla de palanca de bloqueo instantáneo.',
     specs: [
       'Grosor: 10 mm calibrado reglamentario',
@@ -272,7 +272,7 @@ const KODIAK_CATALOG = [
     rating: 4.9,
     reviews: 142,
     badge: '100% PURA',
-    image: 'assets/images/creatine_creapure.svg',
+    image: 'assets/images/creatine_creapure.jpg',
     shortDesc: 'Sello Creapure® de manufactura alemana micronizada para resíntesis inmediata de fosfocreatina.',
     specs: [
       'Porciones: 100 servicios de 5g',
@@ -293,7 +293,7 @@ const KODIAK_CATALOG = [
     rating: 4.9,
     reviews: 97,
     badge: 'HYDRO WHEY',
-    image: 'assets/images/whey_isolate.svg',
+    image: 'assets/images/whey_isolate.jpg',
     shortDesc: 'Aislado de suero lácteo microfiltrado por flujo cruzado (CFM) con 27g de proteína por servicio.',
     specs: [
       'Proteína neta: 27g por porción de 30g (90% concentración)',
@@ -314,7 +314,7 @@ const KODIAK_CATALOG = [
     rating: 4.8,
     reviews: 48,
     badge: 'BUFFER LÁCTICO',
-    image: 'assets/images/beta_alanine.svg',
+    image: 'assets/images/beta_alanine.jpg',
     shortDesc: 'Patente CarnoSyn® para máxima síntesis de carnosina intramuscular y retardo de fatiga neuromuscular.',
     specs: [
       'Dosis por porción: 3200 mg de Beta-Alanina pura',
@@ -337,7 +337,7 @@ const KODIAK_CATALOG = [
     rating: 5.0,
     reviews: 86,
     badge: 'IPF COMPLIANT',
-    image: 'assets/images/wrist_wraps.svg',
+    image: 'assets/images/wrist_wraps.jpg',
     shortDesc: 'Soporte articular rígido de máxima compresión para cargas masivas en press banca y sentadilla.',
     specs: [
       'Longitud: 24 pulgadas (60 cm) con lazo elástico para pulgar',
@@ -360,7 +360,7 @@ const KODIAK_CATALOG = [
     rating: 4.8,
     reviews: 77,
     badge: 'ZERO SLIP',
-    image: 'assets/images/liquid_chalk.svg',
+    image: 'assets/images/liquid_chalk.jpg',
     shortDesc: 'Fórmula de carbonato de magnesio con base de secado ultra rápido en 15 segundos sin generar polvo.',
     specs: [
       'Volumen: 250 ml (aproximadamente 150 aplicaciones)',
@@ -383,7 +383,7 @@ const KODIAK_CATALOG = [
     rating: 5.0,
     reviews: 42,
     badge: 'CALIBRADO IPF',
-    image: 'assets/images/plate_20kg.svg',
+    image: 'assets/images/plate_20kg.jpg',
     shortDesc: 'Disco de uretano virgen de competición con buje central de acero inoxidable de 50.4mm y tolerancia de ±10g.',
     specs: [
       'Tolerancia de peso: ± 10 gramos calibrado',
@@ -406,7 +406,7 @@ const KODIAK_CATALOG = [
     rating: 4.9,
     reviews: 67,
     badge: 'HEAVYWEIGHT 280G',
-    image: 'assets/images/apparel_tshirt.svg',
+    image: 'assets/images/apparel_tshirt.jpg',
     shortDesc: 'Algodón peinado premium de 280 g/m² con corte estructurado drop-shoulder para streetlifting y fuerza.',
     specs: [
       'Gramaje del tejido: 280 GSM de alta densidad',
@@ -429,7 +429,7 @@ const KODIAK_CATALOG = [
     rating: 4.9,
     reviews: 53,
     badge: '4-WAY STRETCH',
-    image: 'assets/images/apparel_jogger.svg',
+    image: 'assets/images/apparel_jogger.jpg',
     shortDesc: 'Tejido técnico ripstop ultraelástico con refuerzo en entrepierna y cremalleras YKK termoselladas.',
     specs: [
       'Elasticidad: 4-Way Stretch con rango libre de sentadilla profunda',
@@ -452,7 +452,7 @@ const KODIAK_CATALOG = [
     rating: 5.0,
     reviews: 81,
     badge: 'ZERO DROP SOLE',
-    image: 'assets/images/shoes_lifting.svg',
+    image: 'assets/images/shoes_lifting.jpg',
     shortDesc: 'Zapatillas de suela plana de 3mm de caucho vulcanizado para máxima transferencia de fuerza en peso muerto.',
     specs: [
       'Perfil de suela: 3 mm Zero-Drop de contacto total con la plataforma',
@@ -477,7 +477,7 @@ const KODIAK_CATALOG = [
     rating: 4.9,
     reviews: 46,
     badge: 'CORDURA 1000D',
-    image: 'assets/images/bag_duffle.svg',
+    image: 'assets/images/bag_duffle.jpg',
     shortDesc: 'Bolso de entrenamiento impermeable con túnel ventilado para zapatillas y correas externas para cinturón de palanca.',
     specs: [
       'Capacidad: 45 Litros con compartimento independiente para calzado',
@@ -500,7 +500,7 @@ const KODIAK_CATALOG = [
     rating: 4.8,
     reviews: 64,
     badge: '24H FRÍO EXT.',
-    image: 'assets/images/cooler_thermo.svg',
+    image: 'assets/images/cooler_thermo.jpg',
     shortDesc: 'Botellón térmico con aislamiento al vacío de triple capa que mantiene el agua helada hasta 24 horas continuas.',
     specs: [
       'Capacidad neta: 1500 ml (1.5 Litros / 50 oz)',
@@ -726,7 +726,7 @@ class KodiakApp {
           <article class="product-card" data-product-id="${prod.id}">
             <div class="product-img-box" onclick="window.kodiakStore.openZoomModal(${prod.id})" title="Click para ver inspección y Zoom Mercado Libre">
               <span class="product-badge">${prod.badge}</span>
-              <img src="${prod.image}" alt="${prod.name}" loading="lazy">
+              <img src="${prod.image}" alt="${prod.name}" loading="lazy" onerror="this.onerror=null; this.src=this.src.replace('.jpg', '.svg');">
             </div>
 
             <div class="p-3 d-flex flex-column flex-grow-1">
@@ -938,7 +938,7 @@ class KodiakApp {
       const cId = item.cartItemId || (item.size ? `${item.id}_${item.size}` : `${item.id}`);
       return `
         <div class="cart-item-row">
-          <img src="${item.image}" alt="${item.name}" class="cart-item-thumb">
+          <img src="${item.image}" alt="${item.name}" class="cart-item-thumb" onerror="this.onerror=null; this.src=this.src.replace('.jpg', '.svg');">
           <div class="flex-grow-1">
             <h6 class="text-white mb-1 small fw-bold">${item.name}</h6>
             ${item.size ? `<span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-50 px-2 py-0 mb-1" style="font-size: 0.68rem; font-weight: 700;"><i class="fa-solid fa-ruler me-1"></i>Talla: ${item.size}</span>` : ''}
@@ -1101,7 +1101,7 @@ class KodiakApp {
         <th class="text-secondary">Foto</th>
         ${selectedProducts.map(p => `
           <td class="text-center">
-            <img src="${p.image}" alt="${p.name}" style="height: 100px; object-fit: contain;">
+            <img src="${p.image}" alt="${p.name}" style="height: 100px; width: 100px; object-fit: cover; border-radius: 8px;" onerror="this.onerror=null; this.src=this.src.replace('.jpg', '.svg');">
           </td>
         `).join('')}
       </tr>
